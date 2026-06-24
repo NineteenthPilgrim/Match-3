@@ -7,9 +7,15 @@ var Grid = []
 var Selected_Piece = null #create variable to store selected element
 var Selected_Sprite = null 
 var Is_Animating = false
+var Moves_Left = 20
+var Moves_Label: Label
 
 
 func _ready():
+	Moves_Label = Label.new()
+	Moves_Label.text = "Moves: %d" % Moves_Left
+	Moves_Label.position = Vector2(-100,160)
+	add_child(Moves_Label)
 	print("Сетка готова: ", Rows, "x", Cols)
 	var textures = [
 		preload("res://sprites/Blue-match-3.png"),
@@ -95,6 +101,10 @@ func swap_pieces(Piece1: Area2D, Piece2: Area2D):
 		print("Found matches: ", Matches.size())
 		highlight_matches(Matches)
 		remove_matches(Matches)
+		Moves_Left -= 1
+		Moves_Label.text = "Moves: %d" % Moves_Left
+		if Moves_Left <= 0:
+			game_over()
 	else:
 		print("No matches")
 		Temp_Pos = Piece1.position
@@ -256,6 +266,11 @@ func refill_board():
 				Grid[row][col] = Piece 
 				var tween = get_tree().create_tween()
 				tween.tween_property(Piece, "position", Target_Pos, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+
+func game_over():
+	print("Game Over!")
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
