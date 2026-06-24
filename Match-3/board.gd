@@ -40,6 +40,11 @@ func _ready():
 	var Start_matches = find_matches()
 	if Start_matches.size() > 0:
 		remove_matches(Start_matches)
+		
+	var Camera = $Camera2D				#camera settings
+	var Field_Center = Vector2(Cols * Tile_Size / 2, Rows * Tile_Size/2)
+	Camera.position = Field_Center
+	Camera.enabled = true
 
 
 func _on_piece_clicked(viewport, event, shape_index, piece):	#call function on element click
