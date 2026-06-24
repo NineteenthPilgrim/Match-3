@@ -59,7 +59,7 @@ func _on_piece_clicked(viewport, event, shape_index, piece):	#call function on e
 				print("Pieces swapped")
 			else:
 				print("Not neighbors")
-			Selected_Piece.modulate = Color(1, 1, 1)
+				Selected_Piece.modulate = Color(1, 1, 1)
 			Selected_Piece = null
 			Selected_Sprite = null
 			print("First element is no longer selected")
@@ -85,60 +85,98 @@ func swap_pieces(Piece1: Area2D, Piece2: Area2D):
 	Grid[row2][col2] = Temp
 	
 	var Matches = find_matches()
-	if Matches.size() > 0:
+	
+	if Matches.size() > 0:   
 		print("Found matches: ", Matches.size())
+		highlight_matches(Matches)
 		remove_matches(Matches)
 	else:
 		print("No matches")
+		Piece1.modulate = Color(1,1,1) 
+		Piece2.modulate = Color(1,1,1)
+
+
+func is_in_match(piece: Area2D) -> bool:
+	var row = int(piece.position.y / Tile_Size)
+	var col = int(piece.position.x / Tile_Size)
+	var tex = piece.get_node("Sprite2D").texture
+	var count = 1
+	for c in range(max(col-2,0), min(col+3,Cols)):
+		if Grid[row][c] != null and Grid[row][c].get_node("Sprite2D").texture == tex:
+			count += 1
+			if count >= 3:
+				return true
+	count = 1
+	for r in range(max(row-2,0), min(row+3,Rows)):
+		if Grid[r][col] != null and Grid[r][col].get_node("Sprite2D").texture == tex:
+			count += 1
+	return count >= 3
 
 
 func find_matches() -> Array:
-	var Matches = []
+	var Matches_dict = {}
 	for row in range(Rows):				#check rows
 		if Grid[row] == null:
 			continue
 		if Grid[row].size() < Cols:
 			continue
 		var Count = 1
+		var Start_col = 0
 		for col in range(1, Cols):
 			if col >= Grid[row].size():
 				break
 			if Grid[row][col] == null or Grid[row][col-1] == null:
 				Count = 1
+				Start_col = col 
 				continue
 			var Current = Grid[row][col].get_node("Sprite2D").texture
 			var Previous = Grid[row][col-1].get_node("Sprite2D").texture
 			if Current == Previous: 
 				Count += 1
 				if Count >= 3 and col == Cols - 1:
-					for i in range(Count):
-						Matches.append(Grid[row][col-i])
+					for i in range(Start_col, col + 1):
+						Matches_dict[Grid[row][i]] = true
 			else:
 				if Count >= 3:
-					for i in range(Count):
-						Matches.append(Grid[row][col-1-i])
+					for i in range(Start_col, col):
+						Matches_dict[Grid[row][i]] = true
 				Count = 1
+				Start_col = col
+	
 	for col in range(Cols):				#check cols
 		var Count = 1
+		var Start_row = 0  
 		for row in range(1, Rows):
 			if Grid[row] == null or Grid[row-1] == null:
 				continue
 			if Grid[row][col] == null or Grid[row-1][col] == null:
 				Count = 1
+				Start_row = row
 				continue
 			var Current = Grid[row][col].get_node("Sprite2D").texture
 			var Previous = Grid[row-1][col].get_node("Sprite2D").texture
 			if Current == Previous:
 				Count += 1
 				if Count >= 3 and row == Rows-1:
-					for i in range(Count):
-						Matches.append(Grid[row-i][col])
+					for i in range(Start_row, row + 1):
+						Matches_dict[Grid[i][col]] = true
 			else:
 				if Count >= 3:
-					for i in range(Count):
-						Matches.append(Grid[row-1-i][col])
+					for i in range(Start_row, row):
+						Matches_dict[Grid[i][col]] = true
 				Count = 1
-	return Matches
+				Start_row = row 
+	return Matches_dict.keys()
+
+
+func highlight_matches(Matches: Array):
+	for row in range(Rows):
+		for col in range(Cols):
+			if Grid[row][col] != null:
+				Grid[row][col].modulate = Color(1,1,1)
+	for piece in Matches:
+		if piece != null:
+			piece.modulate = Color(1, 0, 0.2)
 
 
 func remove_matches(Matches: Array):	#added match removal function
@@ -162,6 +200,7 @@ func remove_matches(Matches: Array):	#added match removal function
 	else:
 		await get_tree().create_timer(0.1).timeout
 		Is_Animating = false
+
 
 func apply_gravity():
 	for col in range(Cols):
