@@ -97,6 +97,12 @@ func swap_pieces(Piece1: Area2D, Piece2: Area2D):
 		remove_matches(Matches)
 	else:
 		print("No matches")
+		Temp_Pos = Piece1.position
+		Piece1.position = Piece2.position
+		Piece2.position = Temp_Pos
+		Temp = Grid[row1][col1]
+		Grid[row1][col1] = Grid[row2][col2]
+		Grid[row2][col2] = Temp
 		Piece1.modulate = Color(1,1,1) 
 		Piece2.modulate = Color(1,1,1)
 
