@@ -6,6 +6,7 @@ const Tile_Size = 32
 var Grid = []
 var Selected_Piece = null #create variable to store selected element
 var Selected_Sprite = null 
+var Is_Animating = false
 
 
 func _ready():
@@ -42,6 +43,8 @@ func _ready():
 
 
 func _on_piece_clicked(viewport, event, shape_index, piece):	#call function on element click
+	if Is_Animating:
+		return
 	if event is InputEventMouseButton and event.pressed:
 		if Selected_Piece == null:
 			var sprite = piece.get_node("Sprite2D")					#first element selected
@@ -139,6 +142,11 @@ func find_matches() -> Array:
 
 
 func remove_matches(Matches: Array):	#added match removal function
+	Is_Animating = true
+	for piece in Matches:
+		if piece != null:
+			piece.modulate = Color(1, 0, 0.2)		#highlight matched elements
+	await get_tree().create_timer(0.5).timeout	#delay 
 	for piece in Matches:
 		for row in range(Rows):
 			for col in range(Cols):
@@ -147,9 +155,13 @@ func remove_matches(Matches: Array):	#added match removal function
 		piece.queue_free()
 	apply_gravity()			#trigger shift down
 	refill_board()			#refill from top
+	await get_tree().create_timer(0.5).timeout
 	var new_matches = find_matches()
 	if new_matches.size() > 0:
 		remove_matches(new_matches)
+	else:
+		await get_tree().create_timer(0.1).timeout
+		Is_Animating = false
 
 func apply_gravity():
 	for col in range(Cols):
@@ -160,7 +172,9 @@ func apply_gravity():
 						var piece = Grid[k][col]
 						Grid[row][col] = piece
 						Grid[k][col] = null
-						piece.position = Vector2(col * Tile_Size + Tile_Size/2, row * Tile_Size + Tile_Size/2)
+						var Target_Pos = Vector2(col * Tile_Size + Tile_Size/2, row * Tile_Size + Tile_Size/2)
+						var tween = get_tree().create_tween()
+						tween.tween_property(piece, "position", Target_Pos, 0.5)
 						break
 
 
@@ -184,11 +198,14 @@ func refill_board():
 				Collision.shape = RectangleShape2D.new()
 				Collision.shape.extents = Vector2(Tile_Size/2, Tile_Size/2)
 				Piece.add_child(Collision)
-				Piece.position = Vector2(col * Tile_Size + Tile_Size/2, row * Tile_Size + Tile_Size/2)
+				
+				var Target_Pos = Vector2(col * Tile_Size + Tile_Size/2, row * Tile_Size + Tile_Size/2)
+				Piece.position = Target_Pos - Vector2(0, Tile_Size * 2)
 				Piece.connect("input_event", Callable(self, "_on_piece_clicked").bind(Piece))
 				add_child(Piece)
 				Grid[row][col] = Piece 
-
+				var tween = get_tree().create_tween()
+				tween.tween_property(Piece, "position", Target_Pos, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
