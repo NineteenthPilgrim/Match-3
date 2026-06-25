@@ -9,6 +9,8 @@ var Selected_Sprite = null
 var Is_Animating = false
 var Moves_Left = 20
 var Moves_Label: Label
+var Score = 0
+var Score_Label: Label
 
 
 func _ready():
@@ -16,6 +18,12 @@ func _ready():
 	Moves_Label.text = "Moves: %d" % Moves_Left
 	Moves_Label.position = Vector2(-100,160)
 	add_child(Moves_Label)
+	
+	Score_Label = Label.new()
+	Score_Label.text = "Score: %d" % Score
+	Score_Label.position = Vector2(-100,80)
+	add_child(Score_Label)
+	
 	print("Сетка готова: ", Rows, "x", Cols)
 	var textures = [
 		preload("res://sprites/Blue-match-3.png"),
@@ -202,6 +210,16 @@ func highlight_matches(Matches: Array):
 
 func remove_matches(Matches: Array):	#added match removal function
 	Is_Animating = true
+	
+	var count = Matches.size()
+	if count == 3:
+		Score += 100
+	elif  count == 4:
+		Score += 300
+	else:
+		Score += 500
+	Score_Label.text = "Score: %d" % Score
+	
 	for piece in Matches:
 		if piece != null:
 			piece.modulate = Color(1, 0, 0.2)		#highlight matched elements
