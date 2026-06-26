@@ -7,10 +7,11 @@ var Grid = []
 var Selected_Piece = null #create variable to store selected element
 var Selected_Sprite = null 
 var Is_Animating = false
-var Moves_Left = 20
+var Moves_Left = 2
 var Moves_Label: Label
 var Score = 0
 var Score_Label: Label
+var Limit = 16000
 
 
 func _ready():
@@ -239,6 +240,11 @@ func remove_matches(Matches: Array):	#added match removal function
 	else:
 		await get_tree().create_timer(0.1).timeout
 		Is_Animating = false
+		
+	if Score >= 1000:
+		game_win()
+	elif Moves_Left <= 0:
+		game_over()
 
 
 func apply_gravity():
@@ -288,6 +294,10 @@ func refill_board():
 
 func game_over():
 	print("Game Over!")
+
+
+func game_win():
+	print("You Won!")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
