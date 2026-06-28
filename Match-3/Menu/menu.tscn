@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://bfrgk3iouidyc"]
+
+[ext_resource type="Texture2D" uid="uid://cb2gvh1j2bng8" path="res://sprites/Green-match-3.png" id="1_ihied"]
+[ext_resource type="Texture2D" uid="uid://ditwf1os35qpu" path="res://sprites/Red-match-3.png" id="1_raj00"]
+[ext_resource type="Script" uid="uid://c6u71s00xq5rn" path="res://Menu/exit_b.gd" id="1_rwxi6"]
+
+[node name="Control" type="Control" unique_id=202115777]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=231593452]
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 270.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1308631216]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -370.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="StartB" type="TextureButton" parent="VBoxContainer" unique_id=1262924234]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="Start" type="Label" parent="VBoxContainer/StartB" unique_id=274865514]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Start"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuB" type="TextureButton" parent="VBoxContainer" unique_id=627930294]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="Menu" type="Label" parent="VBoxContainer/MenuB" unique_id=12240760]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ExitB" type="TextureButton" parent="VBoxContainer" unique_id=686357322]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+texture_normal = ExtResource("1_raj00")
+texture_pressed = ExtResource("1_ihied")
+script = ExtResource("1_rwxi6")
+
+[node name="Text" type="Label" parent="VBoxContainer/ExitB" unique_id=1903253054]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Exit"
+horizontal_alignment = 1
+vertical_alignment = 1
