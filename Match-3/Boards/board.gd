@@ -1,5 +1,10 @@
 extends Node2D
 
+@onready var Menu_B = $MenuButton
+@onready var Pause_Menu := $PauseMenu
+@onready var Resume_B = $PauseMenu/Resume
+@onready var Exit_B = $PauseMenu/Exit
+
 const Rows = 8
 const Cols = 8
 const Tile_Size = 32
@@ -11,7 +16,7 @@ var Moves_Left = 2
 var Moves_Label: Label
 var Score = 0
 var Score_Label: Label
-var Limit = 16000
+var Limit = 1000
 
 
 func _ready():
@@ -24,6 +29,8 @@ func _ready():
 	Score_Label.text = "Score: %d" % Score
 	Score_Label.position = Vector2(-100,80)
 	add_child(Score_Label)
+	
+	Pause_Menu.visible = false
 	
 	print("Сетка готова: ", Rows, "x", Cols)
 	var textures = [
@@ -60,6 +67,8 @@ func _ready():
 	var Field_Center = Vector2(Cols * Tile_Size / 2, Rows * Tile_Size/2)
 	Camera.position = Field_Center
 	Camera.enabled = true
+
+
 
 
 func _on_piece_clicked(viewport, event, shape_index, piece):	#call function on element click
@@ -241,7 +250,7 @@ func remove_matches(Matches: Array):	#added match removal function
 		await get_tree().create_timer(0.1).timeout
 		Is_Animating = false
 		
-	if Score >= 1000:
+	if Score >= Limit:
 		game_win()
 	elif Moves_Left <= 0:
 		game_over()
@@ -303,3 +312,18 @@ func game_win():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+
+func _on_menu_button_pressed() -> void:
+	Pause_Menu.visible = true
+	get_tree().paused = true
+
+
+func _on_resume_pressed() -> void:
+	get_tree().paused = false
+	Pause_Menu.visible = false
+
+
+func _on_exit_pressed() -> void:
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://Menu/menu.tscn")
