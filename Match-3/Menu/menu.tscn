@@ -62,29 +62,92 @@ script = ExtResource("1_rwxi6")
 [node name="BoxSettings" type="VBoxContainer" parent="HBoxContainer" unique_id=758455222]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 4
 
 [node name="ColorRect" type="Panel" parent="HBoxContainer/BoxSettings" unique_id=6213502]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_ihied")
 
-[node name="Label" type="Label" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=583378932]
-layout_mode = 0
-offset_top = 212.0
-offset_right = 157.0
-offset_bottom = 235.0
+[node name="Settings" type="Label" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=583378932]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -74.5
+offset_top = 4.0
+offset_right = 74.5
+offset_bottom = 34.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 16
 text = "Settings"
+
+[node name="Label" type="Label" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=1183002941]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 34.0
+offset_right = 68.0
+offset_bottom = 52.0
+theme_override_font_sizes/font_size = 12
+text = "Resolution"
+
+[node name="Resolution" type="OptionButton" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=2098808674]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 52.0
+offset_right = 84.0
+offset_bottom = 74.0
+theme_override_font_sizes/font_size = 10
+selected = 0
+item_count = 5
+popup/item_0/text = "480x270"
+popup/item_0/id = 0
+popup/item_1/text = "640×360"
+popup/item_1/id = 1
+popup/item_2/text = "800×450"
+popup/item_2/id = 2
+popup/item_3/text = "1280×720"
+popup/item_3/id = 3
+popup/item_4/text = "1600×900"
+popup/item_4/id = 4
+
+[node name="Label2" type="Label" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=1831078686]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 74.0
+offset_right = 68.0
+offset_bottom = 92.0
+theme_override_font_sizes/font_size = 10
+text = "Window mode"
+
+[node name="Window" type="OptionButton" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=1168747169]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 92.0
+offset_right = 84.0
+offset_bottom = 114.0
+theme_override_font_sizes/font_size = 10
+selected = 0
+item_count = 2
+popup/item_0/text = "Fullscreen"
+popup/item_0/id = 0
+popup/item_1/text = "Windowed"
+popup/item_1/id = 1
 
 [node name="Close" type="Button" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=883971999]
 layout_mode = 0
-offset_top = 239.0
-offset_right = 157.0
-offset_bottom = 270.0
+offset_left = 4.0
+offset_top = 235.0
+offset_right = 153.0
+offset_bottom = 266.0
 text = "Close"
 
 [node name="BoxEmpty" type="VBoxContainer" parent="HBoxContainer" unique_id=2029328637]
 layout_mode = 2
 size_flags_horizontal = 3
 
+[connection signal="pressed" from="HBoxContainer/MarginContainer/CenterContainer2/BoxMain/StartB" to="." method="_on_start_b_pressed"]
 [connection signal="pressed" from="HBoxContainer/MarginContainer/CenterContainer2/BoxMain/SettingsB" to="." method="_on_settings_b_pressed"]
+[connection signal="item_selected" from="HBoxContainer/BoxSettings/ColorRect/Resolution" to="." method="_on_option_button_item_selected"]
+[connection signal="item_selected" from="HBoxContainer/BoxSettings/ColorRect/Window" to="." method="_on_window_item_selected"]
 [connection signal="pressed" from="HBoxContainer/BoxSettings/ColorRect/Close" to="." method="_on_close_pressed"]
