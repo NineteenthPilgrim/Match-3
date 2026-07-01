@@ -39,6 +39,13 @@ func _ready():
 		preload("res://sprites/Purple-match-3.png"),
 		preload("res://sprites/Red-match-3.png")
 	]
+	
+	var s_textures = [
+		preload("res://sprites/p-Blue-match-3.png"),
+		preload("res://sprites/p-Green-match-3.png"),
+		preload("res://sprites/p-Purple-match-3.png"),
+		preload("res://sprites/p-Red-match-3.png")
+	]
 	Grid.resize(Rows)
 	for row in range(Rows):
 		Grid[row]= []
@@ -220,7 +227,6 @@ func highlight_matches(Matches: Array):
 
 func remove_matches(Matches: Array):	#added match removal function
 	Is_Animating = true
-	
 	var count = Matches.size()
 	if count == 3:
 		Score += 100
@@ -234,6 +240,12 @@ func remove_matches(Matches: Array):	#added match removal function
 		if piece != null:
 			piece.modulate = Color(1, 0, 0.2)		#highlight matched elements
 	await get_tree().create_timer(0.5).timeout	#delay 
+	##
+	##
+	if get_tree().paused:
+		await Resume_B.pressed
+	##
+	##
 	for piece in Matches:
 		for row in range(Rows):
 			for col in range(Cols):
@@ -243,11 +255,15 @@ func remove_matches(Matches: Array):	#added match removal function
 	apply_gravity()			#trigger shift down
 	refill_board()			#refill from top
 	await get_tree().create_timer(0.5).timeout
+	if get_tree().paused:
+		await Resume_B.pressed
 	var new_matches = find_matches()
 	if new_matches.size() > 0:
 		remove_matches(new_matches)
 	else:
 		await get_tree().create_timer(0.1).timeout
+		if get_tree().paused:
+			await Resume_B.pressed
 		Is_Animating = false
 		
 	if Score >= Limit:
@@ -266,6 +282,12 @@ func apply_gravity():
 						Grid[row][col] = piece
 						Grid[k][col] = null
 						var Target_Pos = Vector2(col * Tile_Size + Tile_Size/2, row * Tile_Size + Tile_Size/2)
+						##
+						##
+						if get_tree().paused:
+							await Resume_B.pressed
+						##
+						##
 						var tween = get_tree().create_tween()
 						tween.tween_property(piece, "position", Target_Pos, 0.5)
 						break
@@ -296,7 +318,9 @@ func refill_board():
 				Piece.position = Target_Pos - Vector2(0, Tile_Size * 2)
 				Piece.connect("input_event", Callable(self, "_on_piece_clicked").bind(Piece))
 				add_child(Piece)
-				Grid[row][col] = Piece 
+				Grid[row][col] = Piece
+				if get_tree().paused:
+							await Resume_B.pressed
 				var tween = get_tree().create_tween()
 				tween.tween_property(Piece, "position", Target_Pos, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
