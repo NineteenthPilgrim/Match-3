@@ -74,12 +74,12 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -74.5
+offset_left = -72.5
 offset_top = 4.0
-offset_right = 74.5
+offset_right = 75.5
 offset_bottom = 34.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 18
 text = "Settings"
 
 [node name="Label" type="Label" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=1183002941]
@@ -88,16 +88,16 @@ offset_left = 6.0
 offset_top = 34.0
 offset_right = 68.0
 offset_bottom = 52.0
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 16
 text = "Resolution"
 
 [node name="Resolution" type="OptionButton" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=2098808674]
 layout_mode = 0
 offset_left = 4.0
-offset_top = 52.0
+offset_top = 54.0
 offset_right = 84.0
-offset_bottom = 74.0
-theme_override_font_sizes/font_size = 10
+offset_bottom = 81.0
+theme_override_font_sizes/font_size = 14
 selected = 0
 item_count = 5
 popup/item_0/text = "480x270"
@@ -114,19 +114,19 @@ popup/item_4/id = 4
 [node name="Label2" type="Label" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=1831078686]
 layout_mode = 0
 offset_left = 6.0
-offset_top = 74.0
-offset_right = 68.0
-offset_bottom = 92.0
-theme_override_font_sizes/font_size = 10
+offset_top = 81.0
+offset_right = 79.0
+offset_bottom = 101.0
+theme_override_font_sizes/font_size = 16
 text = "Window mode"
 
 [node name="Window" type="OptionButton" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=1168747169]
 layout_mode = 0
 offset_left = 4.0
-offset_top = 92.0
+offset_top = 101.0
 offset_right = 84.0
-offset_bottom = 114.0
-theme_override_font_sizes/font_size = 10
+offset_bottom = 128.0
+theme_override_font_sizes/font_size = 14
 selected = 0
 item_count = 2
 popup/item_0/text = "Fullscreen"

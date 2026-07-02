@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b1j767m8jb101" path="res://Buttons/Settings-button.png" id="3_yweu8"]
 [ext_resource type="Theme" uid="uid://itkn8nir8uy8" path="res://my_theme.tres" id="4_6dnf8"]
 [ext_resource type="Texture2D" uid="uid://cr6kuals77aic" path="res://Buttons/Settings-button-pressed.png" id="4_nppo8"]
+[ext_resource type="FontFile" uid="uid://dk5pm2127facw" path="res://Fonts/Occular.ttf" id="6_00i6j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_psm7c"]
 texture = ExtResource("2_psm7c")
@@ -61,12 +62,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -64.0
-offset_right = 24.0
-offset_bottom = -40.0
+offset_left = -26.0
+offset_top = -60.0
+offset_right = 26.0
+offset_bottom = -36.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_00i6j")
 text = "Pause"
 
 [node name="Resume" type="Button" parent="PauseMenu" unique_id=241189907]

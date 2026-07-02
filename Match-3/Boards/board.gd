@@ -8,6 +8,7 @@ extends Node2D
 const Rows = 8
 const Cols = 8
 const Tile_Size = 32
+
 var Grid = []
 var Selected_Piece = null #create variable to store selected element
 var Selected_Sprite = null 
@@ -16,30 +17,32 @@ var Moves_Left = 2
 var Moves_Label: Label
 var Score = 0
 var Score_Label: Label
+var Score_LabelS: Label
 var Limit = 1000
 
 
 func _ready():
 	Moves_Label = Label.new()
 	Moves_Label.text = "Moves: %d" % Moves_Left
-	Moves_Label.position = Vector2(-100,160)
+	Moves_Label.position = Vector2(-110,160)
 	add_child(Moves_Label)
 	
 	Score_Label = Label.new()
-	Score_Label.text = "Score: %d" % Score
-	Score_Label.position = Vector2(-100,80)
+	Score_LabelS = Label.new()
+	Score_Label.text = "Score"
+	Score_LabelS.text = "%d" %Score
+	Score_Label.position = Vector2(-110,80)
+	Score_LabelS.position = Vector2(-110,100)
 	add_child(Score_Label)
+	add_child(Score_LabelS)
 	
 	Pause_Menu.visible = false
-	
-	print("Сетка готова: ", Rows, "x", Cols)
 	var textures = [
 		preload("res://sprites/Blue-match-3.png"),
 		preload("res://sprites/Green-match-3.png"),
 		preload("res://sprites/Purple-match-3.png"),
 		preload("res://sprites/Red-match-3.png")
 	]
-	
 	var s_textures = [
 		preload("res://sprites/p-Blue-match-3.png"),
 		preload("res://sprites/p-Green-match-3.png"),
@@ -53,29 +56,26 @@ func _ready():
 			var piece = Area2D.new()	#create element
 			var sprite = Sprite2D.new()	#create texture
 			sprite.name = "Sprite2D"
-			
 			piece.position = Vector2(col * Tile_Size + Tile_Size/2, row * Tile_Size + Tile_Size/2)	#position of element
-			sprite.texture = textures[randi() % textures.size()]	#select texture
-			piece.add_child(sprite)		#add image to node
-			
+			var type_idx := randi() % textures.size()
+			sprite.texture = textures[type_idx]  
+			piece.add_child(sprite)
+			piece.set_meta("orig_tex", textures[type_idx])
+			piece.set_meta("selected_tex", s_textures[type_idx])
 			var collision = CollisionShape2D.new()		#create click area
 			collision.shape = RectangleShape2D.new()	#create ectangle shape
 			collision.shape.extents = Vector2(Tile_Size/2, Tile_Size/2)
 			piece.add_child(collision)
-			
 			piece.connect("input_event", Callable(self, "_on_piece_clicked").bind(piece)) #connect signal
 			add_child(piece)
 			Grid[row].append(piece)		#save element to array
 	var Start_matches = find_matches()
 	if Start_matches.size() > 0:
 		remove_matches(Start_matches)
-		
 	var Camera = $Camera2D				#camera settings
 	var Field_Center = Vector2(Cols * Tile_Size / 2, Rows * Tile_Size/2)
 	Camera.position = Field_Center
 	Camera.enabled = true
-
-
 
 
 func _on_piece_clicked(viewport, event, shape_index, piece):	#call function on element click
@@ -87,7 +87,9 @@ func _on_piece_clicked(viewport, event, shape_index, piece):	#call function on e
 			if sprite != null:
 				Selected_Piece = piece
 				Selected_Sprite = sprite
-				Selected_Piece.modulate = Color(0.2, 0.2, 0.2)		#highlight element
+				var sel := piece.get_meta("selected_tex") as Texture2D
+				if sel:
+					sprite.texture = sel
 				print("First element selected")
 		else:
 			if neighbors(Selected_Piece.position, piece.position):
@@ -95,7 +97,9 @@ func _on_piece_clicked(viewport, event, shape_index, piece):	#call function on e
 				print("Pieces swapped")
 			else:
 				print("Not neighbors")
-				Selected_Piece.modulate = Color(1, 1, 1)
+				var orig := Selected_Piece.get_meta("orig_tex") as Texture2D
+				if orig:
+					Selected_Piece.get_node("Sprite2D").texture = orig   
 			Selected_Piece = null
 			Selected_Sprite = null
 			print("First element is no longer selected")
@@ -120,6 +124,11 @@ func swap_pieces(Piece1: Area2D, Piece2: Area2D):
 	Grid[row1][col1] = Grid[row2][col2]
 	Grid[row2][col2] = Temp
 	
+	var o1 := Piece1.get_meta("orig_tex") as Texture2D
+	var o2 := Piece2.get_meta("orig_tex") as Texture2D
+	if o1: Piece1.get_node("Sprite2D").texture = o1
+	if o2: Piece2.get_node("Sprite2D").texture = o2
+	
 	var Matches = find_matches()
 	
 	if Matches.size() > 0:   
@@ -138,8 +147,10 @@ func swap_pieces(Piece1: Area2D, Piece2: Area2D):
 		Temp = Grid[row1][col1]
 		Grid[row1][col1] = Grid[row2][col2]
 		Grid[row2][col2] = Temp
-		Piece1.modulate = Color(1,1,1) 
-		Piece2.modulate = Color(1,1,1)
+		var ro1 := Piece1.get_meta("orig_tex") as Texture2D
+		var ro2 := Piece2.get_meta("orig_tex") as Texture2D
+		if ro1: Piece1.get_node("Sprite2D").texture = ro1
+		if ro2: Piece2.get_node("Sprite2D").texture = ro2
 
 
 func is_in_match(piece: Area2D) -> bool:
@@ -234,18 +245,15 @@ func remove_matches(Matches: Array):	#added match removal function
 		Score += 300
 	else:
 		Score += 500
-	Score_Label.text = "Score: %d" % Score
+	Score_Label.text = "Score"
+	Score_LabelS.text = "%d" %Score
 	
 	for piece in Matches:
 		if piece != null:
 			piece.modulate = Color(1, 0, 0.2)		#highlight matched elements
 	await get_tree().create_timer(0.5).timeout	#delay 
-	##
-	##
 	if get_tree().paused:
 		await Resume_B.pressed
-	##
-	##
 	for piece in Matches:
 		for row in range(Rows):
 			for col in range(Cols):
@@ -282,12 +290,8 @@ func apply_gravity():
 						Grid[row][col] = piece
 						Grid[k][col] = null
 						var Target_Pos = Vector2(col * Tile_Size + Tile_Size/2, row * Tile_Size + Tile_Size/2)
-						##
-						##
 						if get_tree().paused:
 							await Resume_B.pressed
-						##
-						##
 						var tween = get_tree().create_tween()
 						tween.tween_property(piece, "position", Target_Pos, 0.5)
 						break
@@ -300,20 +304,27 @@ func refill_board():
 		preload("res://sprites/Purple-match-3.png"),
 		preload("res://sprites/Red-match-3.png")
 	]
+	var s_textures = [
+	preload("res://sprites/p-Blue-match-3.png"),
+	preload("res://sprites/p-Green-match-3.png"),
+	preload("res://sprites/p-Purple-match-3.png"),
+	preload("res://sprites/p-Red-match-3.png")
+	]
 	for row in range(Rows):
 		for col in range(Cols):
 			if Grid[row][col] == null:
 				var Piece = Area2D.new()
 				var Sprite = Sprite2D.new()
 				Sprite.name = "Sprite2D"
-				Sprite.texture = textures[randi() % textures.size()]
+				var type_idx := randi() % textures.size()
+				Sprite.texture = textures[type_idx]  
 				Piece.add_child(Sprite)
-				
+				Piece.set_meta("orig_tex", textures[type_idx])
+				Piece.set_meta("selected_tex", s_textures[type_idx])
 				var Collision = CollisionShape2D.new()
 				Collision.shape = RectangleShape2D.new()
 				Collision.shape.extents = Vector2(Tile_Size/2, Tile_Size/2)
 				Piece.add_child(Collision)
-				
 				var Target_Pos = Vector2(col * Tile_Size + Tile_Size/2, row * Tile_Size + Tile_Size/2)
 				Piece.position = Target_Pos - Vector2(0, Tile_Size * 2)
 				Piece.connect("input_event", Callable(self, "_on_piece_clicked").bind(Piece))

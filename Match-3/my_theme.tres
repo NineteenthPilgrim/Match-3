@@ -2,8 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://bcw8h2y7ibwo7" path="res://Buttons/Button-disabled.png" id="1_kiwll"]
 [ext_resource type="Texture2D" uid="uid://daqy80qq6o75l" path="res://Buttons/Button.png" id="1_pvayc"]
+[ext_resource type="FontFile" uid="uid://dk5pm2127facw" path="res://Fonts/Occular.ttf" id="1_wncaf"]
 [ext_resource type="Texture2D" uid="uid://bs5nykfcnvo6d" path="res://Buttons/Button-pressed.png" id="2_djh02"]
 [ext_resource type="Texture2D" uid="uid://hfdnls3bm8pq" path="res://Buttons/Button-hover.png" id="2_wncaf"]
+[ext_resource type="Texture2D" uid="uid://b0pqppoj6jq6t" path="res://Buttons/R-C.png" id="6_6udjo"]
+[ext_resource type="Texture2D" uid="uid://c6fhk34a3kne" path="res://Buttons/R-UC.png" id="7_iaxao"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_raj00"]
 texture = ExtResource("1_kiwll")
@@ -41,10 +44,34 @@ texture_margin_top = 4.0
 texture_margin_right = 4.0
 texture_margin_bottom = 4.0
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wncaf"]
+texture = ExtResource("2_wncaf")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iaxao"]
+texture = ExtResource("2_djh02")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
 [resource]
+default_font = ExtResource("1_wncaf")
+Button/fonts/MyFonts = ExtResource("1_wncaf")
 Button/styles/disabled = SubResource("StyleBoxTexture_raj00")
 Button/styles/hover = SubResource("StyleBoxTexture_ihied")
 Button/styles/my_stylebox = null
 Button/styles/normal = SubResource("StyleBoxTexture_5r20o")
 Button/styles/pressed = SubResource("StyleBoxTexture_6udjo")
+Label/fonts/font = ExtResource("1_wncaf")
 Panel/styles/panel = SubResource("StyleBoxTexture_odgvp")
+PopupMenu/fonts/font = ExtResource("1_wncaf")
+PopupMenu/fonts/font_separator = ExtResource("1_wncaf")
+PopupMenu/fonts/title_font = ExtResource("1_wncaf")
+PopupMenu/icons/radio_checked = ExtResource("6_6udjo")
+PopupMenu/icons/radio_unchecked = ExtResource("7_iaxao")
+PopupMenu/styles/hover = SubResource("StyleBoxTexture_wncaf")
+PopupMenu/styles/panel = SubResource("StyleBoxTexture_iaxao")
