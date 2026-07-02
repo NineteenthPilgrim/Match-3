@@ -4,6 +4,7 @@ extends Node2D
 @onready var Pause_Menu := $PauseMenu
 @onready var Resume_B = $PauseMenu/Resume
 @onready var Exit_B = $PauseMenu/Exit
+@onready var Lose_Menu := $LoseMenu
 
 const Rows = 8
 const Cols = 8
@@ -15,28 +16,35 @@ var Selected_Sprite = null
 var Is_Animating = false
 var Moves_Left = 2
 var Moves_Label: Label
+var Moves_LabelS: Label
 var Score = 0
 var Score_Label: Label
 var Score_LabelS: Label
-var Limit = 1000
+var Limit = 10000
 
 
 func _ready():
 	Moves_Label = Label.new()
-	Moves_Label.text = "Moves: %d" % Moves_Left
-	Moves_Label.position = Vector2(-110,160)
+	Moves_LabelS = Label.new()
+	Moves_Label.text = "Moves"
+	Moves_LabelS.text = "%d" %Moves_Left
+	Moves_Label.position = Vector2(-104,102)
+	Moves_LabelS.position = Vector2(-104,114)
 	add_child(Moves_Label)
+	add_child(Moves_LabelS)
 	
 	Score_Label = Label.new()
 	Score_LabelS = Label.new()
 	Score_Label.text = "Score"
 	Score_LabelS.text = "%d" %Score
-	Score_Label.position = Vector2(-110,80)
-	Score_LabelS.position = Vector2(-110,100)
+	Score_Label.position = Vector2(-104,68)
+	Score_LabelS.position = Vector2(-104,80)
 	add_child(Score_Label)
 	add_child(Score_LabelS)
 	
 	Pause_Menu.visible = false
+	Lose_Menu.visible = false
+	
 	var textures = [
 		preload("res://sprites/Blue-match-3.png"),
 		preload("res://sprites/Green-match-3.png"),
@@ -136,7 +144,8 @@ func swap_pieces(Piece1: Area2D, Piece2: Area2D):
 		highlight_matches(Matches)
 		remove_matches(Matches)
 		Moves_Left -= 1
-		Moves_Label.text = "Moves: %d" % Moves_Left
+		Moves_Label.text = "Moves"
+		Moves_LabelS.text = "%d" % Moves_Left
 		if Moves_Left <= 0:
 			game_over()
 	else:
@@ -338,6 +347,8 @@ func refill_board():
 
 func game_over():
 	print("Game Over!")
+	Lose_Menu.visible = true
+	get_tree().paused
 
 
 func game_win():
@@ -362,3 +373,7 @@ func _on_resume_pressed() -> void:
 func _on_exit_pressed() -> void:
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://Menu/menu.tscn")
+
+
+func _on_restart_pressed() -> void:
+	get_tree().reload_current_scene()

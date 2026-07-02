@@ -22,6 +22,7 @@ sources/2 = SubResource("TileSetAtlasSource_psm7c")
 [node name="Board#1" type="Node2D" unique_id=1469344524]
 process_mode = 1
 script = ExtResource("1_p0ybc")
+metadata/_edit_vertical_guides_ = [166.0]
 
 [node name="TileMap" type="TileMap" parent="." unique_id=433715692]
 tile_set = SubResource("TileSet_odgvp")
@@ -51,7 +52,7 @@ anchor_bottom = 0.5
 offset_left = -64.0
 offset_top = -64.0
 offset_right = 64.0
-offset_bottom = 64.0
+offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("4_6dnf8")
@@ -103,6 +104,66 @@ theme = ExtResource("4_6dnf8")
 theme_override_font_sizes/font_size = 8
 text = "Exit"
 
+[node name="Panel" type="Panel" parent="." unique_id=1869384864]
+anchors_preset = -1
+offset_left = -112.0
+offset_top = 64.0
+offset_right = -16.0
+offset_bottom = 98.0
+theme = ExtResource("4_6dnf8")
+
+[node name="Panel2" type="Panel" parent="." unique_id=689299469]
+anchors_preset = -1
+offset_left = -112.0
+offset_top = 98.0
+offset_right = -16.0
+offset_bottom = 132.0
+theme = ExtResource("4_6dnf8")
+
+[node name="LoseMenu" type="CanvasLayer" parent="." unique_id=496974391]
+
+[node name="PanelLose" type="Panel" parent="LoseMenu" unique_id=2040140331]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_6dnf8")
+
+[node name="LoseLabel" type="Label" parent="LoseMenu" unique_id=1809144979]
+offset_left = 195.0
+offset_top = 75.0
+offset_right = 287.0
+offset_bottom = 91.0
+theme = ExtResource("4_6dnf8")
+text = "Game Over"
+
+[node name="Restart" type="Button" parent="LoseMenu" unique_id=391981923]
+offset_left = 208.0
+offset_top = 95.0
+offset_right = 272.0
+offset_bottom = 115.0
+theme = ExtResource("4_6dnf8")
+theme_override_font_sizes/font_size = 8
+text = "Restart"
+
+[node name="Exit" type="Button" parent="LoseMenu" unique_id=735071235]
+offset_left = 208.0
+offset_top = 125.0
+offset_right = 272.0
+offset_bottom = 145.0
+theme = ExtResource("4_6dnf8")
+theme_override_font_sizes/font_size = 8
+text = "Exit"
+
 [connection signal="pressed" from="MenuButton" to="." method="_on_menu_button_pressed"]
 [connection signal="pressed" from="PauseMenu/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="PauseMenu/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="LoseMenu/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="LoseMenu/Exit" to="." method="_on_exit_pressed"]

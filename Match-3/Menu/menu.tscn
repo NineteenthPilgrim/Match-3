@@ -3,6 +3,7 @@
 [ext_resource type="Theme" uid="uid://itkn8nir8uy8" path="res://my_theme.tres" id="1_ihied"]
 [ext_resource type="Script" uid="uid://c6u71s00xq5rn" path="res://Menu/exit_b.gd" id="1_rwxi6"]
 [ext_resource type="Script" uid="uid://dp22plgiv62bp" path="res://Menu/menu.gd" id="2_raj00"]
+[ext_resource type="Texture2D" uid="uid://bfjv5mbj7aeni" path="res://sprites/Background.png" id="3_8w4re"]
 
 [node name="Control" type="Control" unique_id=202115777]
 layout_mode = 3
@@ -19,6 +20,7 @@ script = ExtResource("2_raj00")
 layout_mode = 0
 offset_right = 480.0
 offset_bottom = 270.0
+texture = ExtResource("3_8w4re")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=162079868]
 layout_mode = 1
@@ -95,7 +97,7 @@ text = "Resolution"
 layout_mode = 0
 offset_left = 4.0
 offset_top = 54.0
-offset_right = 84.0
+offset_right = 107.0
 offset_bottom = 81.0
 theme_override_font_sizes/font_size = 14
 selected = 0
