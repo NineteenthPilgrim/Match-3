@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://1xqbupckriq7"]
 
 [ext_resource type="Script" uid="uid://duhrr5u0psq4r" path="res://Boards/board.gd" id="1_p0ybc"]
+[ext_resource type="Texture2D" uid="uid://br6gwnyl31m0j" path="res://sprites/BackgroundB.png" id="2_7lksm"]
 [ext_resource type="Texture2D" uid="uid://ji7s3l7670v7" path="res://sprites/Tile-match-3.png" id="2_psm7c"]
 [ext_resource type="Texture2D" uid="uid://b1j767m8jb101" path="res://Buttons/Settings-button.png" id="3_yweu8"]
 [ext_resource type="Theme" uid="uid://itkn8nir8uy8" path="res://my_theme.tres" id="4_6dnf8"]
@@ -23,6 +24,13 @@ sources/2 = SubResource("TileSetAtlasSource_psm7c")
 process_mode = 1
 script = ExtResource("1_p0ybc")
 metadata/_edit_vertical_guides_ = [166.0]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=868863028]
+offset_left = -112.0
+offset_top = -7.0
+offset_right = 368.0
+offset_bottom = 263.0
+texture = ExtResource("2_7lksm")
 
 [node name="TileMap" type="TileMap" parent="." unique_id=433715692]
 tile_set = SubResource("TileSet_odgvp")
@@ -121,6 +129,8 @@ offset_bottom = 132.0
 theme = ExtResource("4_6dnf8")
 
 [node name="LoseMenu" type="CanvasLayer" parent="." unique_id=496974391]
+process_mode = 2
+visible = false
 
 [node name="PanelLose" type="Panel" parent="LoseMenu" unique_id=2040140331]
 anchors_preset = 8
@@ -162,8 +172,41 @@ theme = ExtResource("4_6dnf8")
 theme_override_font_sizes/font_size = 8
 text = "Exit"
 
+[node name="WinMenu" type="CanvasLayer" parent="." unique_id=928407949]
+process_mode = 2
+
+[node name="PanelWin" type="Panel" parent="WinMenu" unique_id=1721984707]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_6dnf8")
+
+[node name="LabelWin" type="Label" parent="WinMenu" unique_id=1052078809]
+offset_left = 202.0
+offset_top = 75.0
+offset_right = 278.0
+offset_bottom = 91.0
+text = "You won!"
+
+[node name="ButtonContinue" type="Button" parent="WinMenu" unique_id=1941519595]
+offset_left = 208.0
+offset_top = 100.0
+offset_right = 272.0
+offset_bottom = 120.0
+theme = ExtResource("4_6dnf8")
+theme_override_font_sizes/font_size = 8
+text = "Continue"
+
 [connection signal="pressed" from="MenuButton" to="." method="_on_menu_button_pressed"]
 [connection signal="pressed" from="PauseMenu/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="PauseMenu/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="LoseMenu/Restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="LoseMenu/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="WinMenu/ButtonContinue" to="." method="_on_button_continue_pressed"]

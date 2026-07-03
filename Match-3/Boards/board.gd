@@ -5,6 +5,7 @@ extends Node2D
 @onready var Resume_B = $PauseMenu/Resume
 @onready var Exit_B = $PauseMenu/Exit
 @onready var Lose_Menu := $LoseMenu
+@onready var Win_Menu := $WinMenu
 
 const Rows = 8
 const Cols = 8
@@ -14,13 +15,13 @@ var Grid = []
 var Selected_Piece = null #create variable to store selected element
 var Selected_Sprite = null 
 var Is_Animating = false
-var Moves_Left = 2
+var Moves_Left = 4
 var Moves_Label: Label
 var Moves_LabelS: Label
 var Score = 0
 var Score_Label: Label
 var Score_LabelS: Label
-var Limit = 10000
+var Limit = 500
 
 
 func _ready():
@@ -44,6 +45,7 @@ func _ready():
 	
 	Pause_Menu.visible = false
 	Lose_Menu.visible = false
+	Win_Menu.visible = false
 	
 	var textures = [
 		preload("res://sprites/Blue-match-3.png"),
@@ -148,6 +150,7 @@ func swap_pieces(Piece1: Area2D, Piece2: Area2D):
 		Moves_LabelS.text = "%d" % Moves_Left
 		if Moves_Left <= 0:
 			game_over()
+			get_tree().paused = true
 	else:
 		print("No matches")
 		Temp_Pos = Piece1.position
@@ -287,6 +290,7 @@ func remove_matches(Matches: Array):	#added match removal function
 		game_win()
 	elif Moves_Left <= 0:
 		game_over()
+		get_tree().paused = true
 
 
 func apply_gravity():
@@ -348,11 +352,12 @@ func refill_board():
 func game_over():
 	print("Game Over!")
 	Lose_Menu.visible = true
-	get_tree().paused
 
 
 func game_win():
 	print("You Won!")
+	Win_Menu.visible = true
+	get_tree().paused = true
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -376,4 +381,10 @@ func _on_exit_pressed() -> void:
 
 
 func _on_restart_pressed() -> void:
+	get_tree().paused = false
 	get_tree().reload_current_scene()
+
+
+func _on_button_continue_pressed() -> void:
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://Menu/menu.tscn")
