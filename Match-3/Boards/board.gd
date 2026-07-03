@@ -12,6 +12,7 @@ const Cols = 8
 const Tile_Size = 32
 
 var Grid = []
+var LevelMask = []
 var Selected_Piece = null #create variable to store selected element
 var Selected_Sprite = null 
 var Is_Animating = false
@@ -21,7 +22,7 @@ var Moves_LabelS: Label
 var Score = 0
 var Score_Label: Label
 var Score_LabelS: Label
-var Limit = 500
+var Limit = 1000
 
 
 func _ready():
@@ -59,10 +60,22 @@ func _ready():
 		preload("res://sprites/p-Purple-match-3.png"),
 		preload("res://sprites/p-Red-match-3.png")
 	]
+	##
+	##
+	setup_level_mask()
+	##
+	##
 	Grid.resize(Rows)
 	for row in range(Rows):
 		Grid[row]= []
 		for col in range(Cols):
+			##
+			##
+			if not LevelMask[row][col]:
+				Grid[row].append(null)
+				continue
+			##
+			##
 			var piece = Area2D.new()	#create element
 			var sprite = Sprite2D.new()	#create texture
 			sprite.name = "Sprite2D"
@@ -117,7 +130,26 @@ func _on_piece_clicked(viewport, event, shape_index, piece):	#call function on e
 
 func neighbors(Pos1: Vector2, Pos2: Vector2) -> bool:
 	var Diff = Pos1 - Pos2
-	return (abs(Diff.x) == Tile_Size and Diff.y == 0) or (abs(Diff.y) == Tile_Size and Diff.x == 0)
+	##
+	##
+	if (abs(Diff.x) == Tile_Size and Diff.y == 0) or (abs(Diff.y) == Tile_Size and Diff.x == 0):
+		var r1 = int(Pos1.y / Tile_Size); var c1 = int(Pos1.x / Tile_Size)
+		var r2 = int(Pos2.y / Tile_Size); var c2 = int(Pos2.x / Tile_Size)
+		if r1 < 0 or r1 >= Rows or r2 < 0 or r2 >= Rows or c1 < 0 or c1 >= Cols or c2 < 0 or c2 >= Cols:
+			return false
+		if not LevelMask[r1][c1] or not LevelMask[r2][c2]:
+			return false
+		if Grid[r1] == null or Grid[r2] == null:
+			return false
+		if Grid[r1].size() <= c1 or Grid[r2].size() <= c2:
+			return false
+		if Grid[r1][c1] == null or Grid[r2][c2] == null:
+			return false
+		return true
+	return false
+	##
+	##
+	##return (abs(Diff.x) == Tile_Size and Diff.y == 0) or (abs(Diff.y) == Tile_Size and Diff.x == 0)
 
 
 func swap_pieces(Piece1: Area2D, Piece2: Area2D):
@@ -129,10 +161,18 @@ func swap_pieces(Piece1: Area2D, Piece2: Area2D):
 	var col1 = int(Piece1.position.x / Tile_Size)
 	var row2 = int(Piece2.position.y / Tile_Size)
 	var col2 = int(Piece2.position.x / Tile_Size)
-	
-	var Temp = Grid[row1][col1]
-	Grid[row1][col1] = Grid[row2][col2]
-	Grid[row2][col2] = Temp
+	##
+	##
+	if row1 >= 0 and row1 < Rows and row2 >= 0 and row2 < Rows and col1 >= 0 and col1 < Cols and col2 >= 0 and col2 < Cols:
+		if LevelMask[row1][col1] and LevelMask[row2][col2]:
+			var Temp = Grid[row1][col1]
+			Grid[row1][col1] = Grid[row2][col2]
+			Grid[row2][col2] = Temp
+	##
+	##
+	#var Temp = Grid[row1][col1]
+	#Grid[row1][col1] = Grid[row2][col2]
+	#Grid[row2][col2] = Temp
 	
 	var o1 := Piece1.get_meta("orig_tex") as Texture2D
 	var o2 := Piece2.get_meta("orig_tex") as Texture2D
@@ -156,9 +196,18 @@ func swap_pieces(Piece1: Area2D, Piece2: Area2D):
 		Temp_Pos = Piece1.position
 		Piece1.position = Piece2.position
 		Piece2.position = Temp_Pos
-		Temp = Grid[row1][col1]
-		Grid[row1][col1] = Grid[row2][col2]
-		Grid[row2][col2] = Temp
+		##
+		##
+		if row1 >= 0 and row1 < Rows and row2 >= 0 and row2 < Rows and col1 >= 0 and col1 < Cols and col2 >= 0 and col2 < Cols:
+			if LevelMask[row1][col1] and LevelMask[row2][col2]:
+				var Temp = Grid[row1][col1]
+				Grid[row1][col1] = Grid[row2][col2]
+				Grid[row2][col2] = Temp
+		##
+		##
+		#Temp = Grid[row1][col1]
+		#Grid[row1][col1] = Grid[row2][col2]
+		#Grid[row2][col2] = Temp
 		var ro1 := Piece1.get_meta("orig_tex") as Texture2D
 		var ro2 := Piece2.get_meta("orig_tex") as Texture2D
 		if ro1: Piece1.get_node("Sprite2D").texture = ro1
@@ -166,17 +215,47 @@ func swap_pieces(Piece1: Area2D, Piece2: Area2D):
 
 
 func is_in_match(piece: Area2D) -> bool:
+	##
+	##
+	if piece == null:
+		return false
+	##
+	##
 	var row = int(piece.position.y / Tile_Size)
 	var col = int(piece.position.x / Tile_Size)
+	##
+	##
+	if row < 0 or row >= Rows or col < 0 or col >= Cols:
+		return false
+	if not LevelMask[row][col]:
+		return false
+	##
+	##
 	var tex = piece.get_node("Sprite2D").texture
 	var count = 1
 	for c in range(max(col-2,0), min(col+3,Cols)):
+		##
+		##
+		if not LevelMask[row][c]:
+			continue
+		if Grid[row] == null or Grid[row].size() <= c:
+			continue
+		##
+		##
 		if Grid[row][c] != null and Grid[row][c].get_node("Sprite2D").texture == tex:
 			count += 1
 			if count >= 3:
 				return true
 	count = 1
 	for r in range(max(row-2,0), min(row+3,Rows)):
+		##
+		##
+		if not LevelMask[r][col]:
+			continue
+		if Grid[r] == null or Grid[r].size() <= col:
+			continue
+		##
+		##
 		if Grid[r][col] != null and Grid[r][col].get_node("Sprite2D").texture == tex:
 			count += 1
 	return count >= 3
@@ -187,13 +266,25 @@ func find_matches() -> Array:
 	for row in range(Rows):				#check rows
 		if Grid[row] == null:
 			continue
-		if Grid[row].size() < Cols:
-			continue
+		#if Grid[row].size() < Cols:
+			#continue
 		var Count = 1
 		var Start_col = 0
 		for col in range(1, Cols):
-			if col >= Grid[row].size():
-				break
+			##
+			##
+			if not LevelMask[row][col] or not LevelMask[row][col-1]:
+				Count = 1
+				Start_col = col 
+				continue
+			if Grid[row] == null or Grid[row].size() <= col or Grid[row].size() <= col-1:
+				Count = 1
+				Start_col = col
+				continue
+			##
+			##
+			#if col >= Grid[row].size():
+				#break
 			if Grid[row][col] == null or Grid[row][col-1] == null:
 				Count = 1
 				Start_col = col 
@@ -204,11 +295,23 @@ func find_matches() -> Array:
 				Count += 1
 				if Count >= 3 and col == Cols - 1:
 					for i in range(Start_col, col + 1):
-						Matches_dict[Grid[row][i]] = true
+						##
+						##
+						if LevelMask[row][i] and Grid[row].size() > i and Grid[row][i] != null:
+							Matches_dict[Grid[row][i]] = true
+						##
+						##
+						#Matches_dict[Grid[row][i]] = true
 			else:
 				if Count >= 3:
 					for i in range(Start_col, col):
-						Matches_dict[Grid[row][i]] = true
+						##
+						##
+						if LevelMask[row][i] and Grid[row].size() > i and Grid[row][i] != null:
+							Matches_dict[Grid[row][i]] = true
+						##
+						##
+						#Matches_dict[Grid[row][i]] = true
 				Count = 1
 				Start_col = col
 	
@@ -216,23 +319,55 @@ func find_matches() -> Array:
 		var Count = 1
 		var Start_row = 0  
 		for row in range(1, Rows):
+			##
+			##
+			if not LevelMask[row][col] or not LevelMask[row-1][col]:
+				Count = 1
+				Start_row = row
+				continue
 			if Grid[row] == null or Grid[row-1] == null:
+				Count = 1
+				Start_row = row
+				continue
+			if Grid[row].size() <= col or Grid[row-1].size() <= col:
+				Count = 1
+				Start_row = row
 				continue
 			if Grid[row][col] == null or Grid[row-1][col] == null:
 				Count = 1
 				Start_row = row
 				continue
+			##
+			##
+			#if Grid[row] == null or Grid[row-1] == null:
+				#continue
+			#if Grid[row][col] == null or Grid[row-1][col] == null:
+				#Count = 1
+				#Start_row = row
+				#continue
 			var Current = Grid[row][col].get_node("Sprite2D").texture
 			var Previous = Grid[row-1][col].get_node("Sprite2D").texture
 			if Current == Previous:
 				Count += 1
 				if Count >= 3 and row == Rows-1:
 					for i in range(Start_row, row + 1):
-						Matches_dict[Grid[i][col]] = true
+						##
+						##
+						if LevelMask[i][col] and Grid[i].size() > col and Grid[i][col] != null:
+							Matches_dict[Grid[i][col]] = true
+						##
+						##
+						#Matches_dict[Grid[i][col]] = true
 			else:
 				if Count >= 3:
 					for i in range(Start_row, row):
-						Matches_dict[Grid[i][col]] = true
+						##
+						##
+						if LevelMask[i][col] and Grid[i].size() > col and Grid[i][col] != null:
+							Matches_dict[Grid[i][col]] = true
+						##
+						##
+						#Matches_dict[Grid[i][col]] = true
 				Count = 1
 				Start_row = row 
 	return Matches_dict.keys()
@@ -240,7 +375,13 @@ func find_matches() -> Array:
 
 func highlight_matches(Matches: Array):
 	for row in range(Rows):
-		for col in range(Cols):
+		##
+		##
+		if Grid[row] == null:
+			continue
+		##
+		##
+		for col in range(Grid[row].size()):
 			if Grid[row][col] != null:
 				Grid[row][col].modulate = Color(1,1,1)
 	for piece in Matches:
@@ -268,10 +409,18 @@ func remove_matches(Matches: Array):	#added match removal function
 		await Resume_B.pressed
 	for piece in Matches:
 		for row in range(Rows):
-			for col in range(Cols):
+			##
+			##
+			if Grid[row] == null:
+				continue
+			##
+			##
+			#for col in range(Cols):
+			for col in range(Grid[row].size()):
 				if Grid[row][col] == piece:
 					Grid[row][col] = null
-		piece.queue_free()
+		if piece:
+			piece.queue_free()
 	apply_gravity()			#trigger shift down
 	refill_board()			#refill from top
 	await get_tree().create_timer(0.5).timeout
@@ -296,8 +445,24 @@ func remove_matches(Matches: Array):	#added match removal function
 func apply_gravity():
 	for col in range(Cols):
 		for row in range(Rows - 1, -1, -1):
+			##
+			##
+			if not LevelMask[row][col]:
+				continue
+			if Grid[row] == null or Grid[row].size() <= col:
+				continue
+			##
+			##
 			if Grid[row][col] == null:
 				for k in range(row - 1, -1, -1):
+					##
+					##
+					if not LevelMask[k][col]:
+						continue
+					if Grid[k] == null or Grid[k].size() <= col:
+						continue
+					##
+					##
 					if Grid[k][col] != null:
 						var piece = Grid[k][col]
 						Grid[row][col] = piece
@@ -325,6 +490,17 @@ func refill_board():
 	]
 	for row in range(Rows):
 		for col in range(Cols):
+			##
+			##
+			if not LevelMask[row][col]:
+				continue
+			if Grid[row] == null:
+				continue
+			if Grid[row].size() <= col:
+				while Grid[row].size() <= col:
+					Grid[row].append(null)
+			##
+			##
 			if Grid[row][col] == null:
 				var Piece = Area2D.new()
 				var Sprite = Sprite2D.new()
@@ -347,6 +523,15 @@ func refill_board():
 							await Resume_B.pressed
 				var tween = get_tree().create_tween()
 				tween.tween_property(Piece, "position", Target_Pos, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+
+func setup_level_mask():
+	LevelMask = []
+	for r in range(Rows):
+		var row_mask = []
+		for c in range(Cols):
+			row_mask.append(true) # по умолчанию слот есть
+		LevelMask.append(row_mask)
 
 
 func game_over():

@@ -47,8 +47,25 @@ offset_bottom = 32.0
 texture_normal = ExtResource("3_yweu8")
 texture_pressed = ExtResource("4_nppo8")
 
+[node name="Score" type="Panel" parent="." unique_id=1869384864]
+anchors_preset = -1
+offset_left = -112.0
+offset_top = 64.0
+offset_right = -16.0
+offset_bottom = 98.0
+theme = ExtResource("4_6dnf8")
+
+[node name="Moves" type="Panel" parent="." unique_id=689299469]
+anchors_preset = -1
+offset_left = -112.0
+offset_top = 98.0
+offset_right = -16.0
+offset_bottom = 132.0
+theme = ExtResource("4_6dnf8")
+
 [node name="PauseMenu" type="CanvasLayer" parent="." unique_id=1367059750]
 process_mode = 2
+visible = false
 
 [node name="PanelMenu" type="Panel" parent="PauseMenu" unique_id=2086979154]
 process_mode = 2
@@ -112,22 +129,6 @@ theme = ExtResource("4_6dnf8")
 theme_override_font_sizes/font_size = 8
 text = "Exit"
 
-[node name="Panel" type="Panel" parent="." unique_id=1869384864]
-anchors_preset = -1
-offset_left = -112.0
-offset_top = 64.0
-offset_right = -16.0
-offset_bottom = 98.0
-theme = ExtResource("4_6dnf8")
-
-[node name="Panel2" type="Panel" parent="." unique_id=689299469]
-anchors_preset = -1
-offset_left = -112.0
-offset_top = 98.0
-offset_right = -16.0
-offset_bottom = 132.0
-theme = ExtResource("4_6dnf8")
-
 [node name="LoseMenu" type="CanvasLayer" parent="." unique_id=496974391]
 process_mode = 2
 visible = false
@@ -174,6 +175,7 @@ text = "Exit"
 
 [node name="WinMenu" type="CanvasLayer" parent="." unique_id=928407949]
 process_mode = 2
+visible = false
 
 [node name="PanelWin" type="Panel" parent="WinMenu" unique_id=1721984707]
 anchors_preset = 8
