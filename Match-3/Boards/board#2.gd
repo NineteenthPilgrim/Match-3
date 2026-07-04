@@ -23,7 +23,7 @@ var Moves_LabelS: Label
 var Score = 0
 var Score_Label: Label
 var Score_LabelS: Label
-var Limit = 5000
+var Limit = 10000
 
 
 func _ready():
@@ -163,6 +163,8 @@ func swap_pieces(Piece1: Area2D, Piece2: Area2D):
 	if o1: Piece1.get_node("Sprite2D").texture = o1
 	if o2: Piece2.get_node("Sprite2D").texture = o2
 	
+	#var Matches = find_matches()
+	##
 	var groups = find_matches()
 	var flat_matches = []
 	for g in groups:
@@ -172,12 +174,14 @@ func swap_pieces(Piece1: Area2D, Piece2: Area2D):
 	if flat_matches.size() > 0:
 		print("Found matches groups: ", groups.size(), " total pieces: ", flat_matches.size()) 
 		highlight_matches(flat_matches)
+		remove_matches(groups) 
 		Moves_Left -= 1
 		Moves_Label.text = "Moves"
 		Moves_LabelS.text = "%d" % Moves_Left
 		if Moves_Left <= 0:
 			No_More_Moves = true
-		await remove_matches(groups)
+			#game_over()
+			#get_tree().paused = true
 	else:
 		print("No matches")
 		Temp_Pos = Piece1.position
@@ -428,19 +432,29 @@ func remove_matches(Matches: Array):	#added match removal function
 			Score += 300
 		else:
 			Score += 500
-	
+	#
+	#if count == 3:
+		#Score += 100
+	#elif  count == 4:
+		#Score += 300
+	#else:
+		#Score += 500
 	Score_Label.text = "Score"
 	Score_LabelS.text = "%d" %Score
 	
+	##
 	for group in Matches:
 		for piece in group:
 			if piece != null:
 				piece.modulate = Color(1, 0, 0.2)
-	
+	##
+	#for piece in Matches:
+		#if piece != null:
+			#piece.modulate = Color(1, 0, 0.2)		#highlight matched elements
 	await get_tree().create_timer(0.5).timeout	#delay 
 	if get_tree().paused:
 		await Resume_B.pressed
-	
+	##
 	for group in Matches:
 		for piece in group:
 			for row in range(Rows):
@@ -451,7 +465,16 @@ func remove_matches(Matches: Array):	#added match removal function
 						Grid[row][col] = null
 			if piece:
 				piece.queue_free()
-	
+	##
+	#for piece in Matches:
+		#for row in range(Rows):
+			#if Grid[row] == null:
+				#continue
+			#for col in range(Grid[row].size()):
+				#if Grid[row][col] == piece:
+					#Grid[row][col] = null
+		#if piece:
+			#piece.queue_free()
 	apply_gravity()			#trigger shift down
 	refill_board()			#refill from top
 	await get_tree().create_timer(0.5).timeout
@@ -465,10 +488,13 @@ func remove_matches(Matches: Array):	#added match removal function
 		if get_tree().paused:
 			await Resume_B.pressed
 		Is_Animating = false
+		if No_More_Moves:
+			game_over()
+			get_tree().paused = true
 		
 	if Score >= Limit:
 		game_win()
-	elif No_More_Moves:
+	elif Moves_Left <= 0:
 		game_over()
 		get_tree().paused = true
 
@@ -551,11 +577,19 @@ func setup_level_mask():
 		for c in range(Cols):
 			row_mask.append(true) 
 		LevelMask.append(row_mask)
-	LevelMask[3][3] = false
-	LevelMask[3][4] = false
-	LevelMask[4][3] = false
-	LevelMask[4][4] = false
-
+	LevelMask[0][0] = false
+	LevelMask[0][1] = false
+	LevelMask[0][6] = false
+	LevelMask[0][7] = false
+	LevelMask[1][0] = false
+	LevelMask[1][7] = false
+	
+	LevelMask[6][0] = false
+	LevelMask[7][0] = false
+	LevelMask[7][1] = false
+	LevelMask[6][7] = false
+	LevelMask[7][6] = false
+	LevelMask[7][7] = false
 
 func game_over():
 	print("Game Over!")
@@ -595,4 +629,4 @@ func _on_restart_pressed() -> void:
 
 func _on_button_continue_pressed() -> void:
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://Boards/board#2.tscn")
+	get_tree().change_scene_to_file("res://Menu/menu.tscn")
