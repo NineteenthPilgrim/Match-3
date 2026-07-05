@@ -17,7 +17,7 @@ var Selected_Piece = null #create variable to store selected element
 var Selected_Sprite = null 
 var Is_Animating = false
 var No_More_Moves := false
-var Moves_Left = 5
+var Moves_Left = 7
 var Moves_Label: Label
 var Moves_LabelS: Label
 var Score = 0

@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://fckdk5fsn64"]
 
 [ext_resource type="Texture2D" uid="uid://ckdx1oradjygy" path="res://sprites/BackgroundB5.png" id="1_4dtru"]
+[ext_resource type="Script" uid="uid://d1c7mr74sfonn" path="res://Boards/board#5.gd" id="1_gmhcs"]
 [ext_resource type="Texture2D" uid="uid://djtcpk61rinmk" path="res://sprites/Tile-match-3-B.png" id="2_83dvo"]
 [ext_resource type="Theme" uid="uid://itkn8nir8uy8" path="res://my_theme.tres" id="2_ebluu"]
 [ext_resource type="Texture2D" uid="uid://ji7s3l7670v7" path="res://sprites/Tile-match-3.png" id="3_h3ovc"]
 [ext_resource type="Texture2D" uid="uid://b1j767m8jb101" path="res://Buttons/Settings-button.png" id="5_i550g"]
 [ext_resource type="Texture2D" uid="uid://cr6kuals77aic" path="res://Buttons/Settings-button-pressed.png" id="6_fvll0"]
+[ext_resource type="FontFile" uid="uid://dk5pm2127facw" path="res://Fonts/Occular.ttf" id="7_fvll0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i550g"]
 texture = ExtResource("2_83dvo")
@@ -28,7 +30,10 @@ tile_size = Vector2i(32, 32)
 sources/2 = SubResource("TileSetAtlasSource_fvll0")
 sources/0 = SubResource("TileSetAtlasSource_i550g")
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gmhcs"]
+
 [node name="board#5" type="Node2D" unique_id=1601965664]
+script = ExtResource("1_gmhcs")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=220726617]
 offset_left = -112.0
@@ -43,11 +48,12 @@ rendering_quadrant_size = 32
 format = 2
 layer_0/tile_data = PackedInt32Array(0, 2, 0, 1, 65538, 0, 65537, 65538, 0, 65539, 65538, 0, 5, 65538, 0, 7, 65538, 0, 131079, 65536, 1, 458759, 65536, 0, 327684, 65538, 0, 327682, 0, 1, 196609, 65538, 0, 327680, 65538, 0, 196612, 65538, 1, 131077, 65538, 0, 458754, 65538, 0, 262150, 65538, 0, 2, 2, 0, 131075, 2, 0, 131076, 2, 0, 262146, 65536, 1, 393216, 2, 0, 458753, 2, 0, 458756, 2, 0, 393221, 2, 0, 327687, 2, 0, 458757, 2, 1, 327686, 2, 1, 262148, 2, 0, 393217, 65536, 0, 458752, 0, 1, 131072, 0, 1, 131074, 2, 1, 65540, 2, 1, 65541, 2, 1, 196615, 2, 1, 262149, 0, 0, 393219, 65538, 1, 393220, 65538, 1, 262145, 65538, 1, 196610, 65538, 1, 131073, 65538, 1, 3, 65538, 1, 65542, 65538, 1, 131078, 65538, 1, 393223, 65538, 1, 262144, 65538, 1, 393218, 65538, 1, 458758, 65538, 1, 327685, 65536, 1, 262147, 2, 1, 327681, 65538, 0, 458755, 65538, 0, 393222, 65536, 0, 262151, 2, 1, 196613, 2, 1, 196608, 2, 1, 65538, 2, 1, 327683, 65538, 1, 6, 65538, 0, 196614, 2, 1, 65543, 0, 0, 4, 65538, 1, 65536, 0, 0, 196611, 2, 0)
 
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1469897497]
+
 [node name="Score" type="Panel" parent="." unique_id=575813628]
 anchors_preset = -1
 offset_left = -112.0
 offset_top = 64.0
-offset_right = -16.0
 offset_bottom = 98.0
 theme = ExtResource("2_ebluu")
 
@@ -55,7 +61,6 @@ theme = ExtResource("2_ebluu")
 anchors_preset = -1
 offset_left = -112.0
 offset_top = 98.0
-offset_right = -16.0
 offset_bottom = 132.0
 theme = ExtResource("2_ebluu")
 
@@ -65,3 +70,154 @@ offset_right = -64.0
 offset_bottom = 32.0
 texture_normal = ExtResource("5_i550g")
 texture_pressed = ExtResource("6_fvll0")
+
+[node name="PauseMenu" type="CanvasLayer" parent="." unique_id=748481713]
+process_mode = 2
+visible = false
+
+[node name="PanelMenu" type="Panel" parent="PauseMenu" unique_id=2032310800]
+process_mode = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ebluu")
+
+[node name="PauseLabel" type="Label" parent="PauseMenu" unique_id=943165770]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.0
+offset_top = -60.0
+offset_right = 26.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("7_fvll0")
+text = "Pause"
+
+[node name="Resume" type="Button" parent="PauseMenu" unique_id=903585785]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ebluu")
+theme_override_font_sizes/font_size = 8
+text = "Resume"
+
+[node name="Exit" type="Button" parent="PauseMenu" unique_id=33876994]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -10.0
+offset_right = 32.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ebluu")
+theme_override_font_sizes/font_size = 8
+text = "Exit"
+
+[node name="LoseMenu" type="CanvasLayer" parent="." unique_id=942875451]
+process_mode = 2
+visible = false
+
+[node name="PanelLose" type="Panel" parent="LoseMenu" unique_id=1422515609]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ebluu")
+
+[node name="LoseLabel" type="Label" parent="LoseMenu" unique_id=1252197384]
+offset_left = 195.0
+offset_top = 75.0
+offset_right = 287.0
+offset_bottom = 91.0
+theme = ExtResource("2_ebluu")
+theme_override_styles/normal = SubResource("StyleBoxTexture_gmhcs")
+text = "Game Over"
+
+[node name="Restart" type="Button" parent="LoseMenu" unique_id=1689256107]
+offset_left = 208.0
+offset_top = 95.0
+offset_right = 272.0
+offset_bottom = 115.0
+theme = ExtResource("2_ebluu")
+theme_override_font_sizes/font_size = 8
+text = "Restart"
+
+[node name="Exit" type="Button" parent="LoseMenu" unique_id=861603386]
+offset_left = 208.0
+offset_top = 125.0
+offset_right = 272.0
+offset_bottom = 145.0
+theme = ExtResource("2_ebluu")
+theme_override_font_sizes/font_size = 8
+text = "Exit"
+
+[node name="WinMenu" type="CanvasLayer" parent="." unique_id=1828095418]
+process_mode = 2
+visible = false
+
+[node name="PanelWin" type="Panel" parent="WinMenu" unique_id=814408722]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ebluu")
+
+[node name="LabelWin" type="Label" parent="WinMenu" unique_id=1382919434]
+offset_left = 202.0
+offset_top = 75.0
+offset_right = 278.0
+offset_bottom = 91.0
+text = "You won!"
+
+[node name="ButtonContinue" type="Button" parent="WinMenu" unique_id=1071852262]
+offset_left = 208.0
+offset_top = 100.0
+offset_right = 272.0
+offset_bottom = 120.0
+theme = ExtResource("2_ebluu")
+theme_override_font_sizes/font_size = 8
+text = "Continue"
+
+[connection signal="pressed" from="MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="PauseMenu/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="PauseMenu/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="LoseMenu/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="LoseMenu/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="WinMenu/ButtonContinue" to="." method="_on_button_continue_pressed"]

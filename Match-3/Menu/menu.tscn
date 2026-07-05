@@ -15,6 +15,12 @@
 [ext_resource type="Texture2D" uid="uid://isdwmsua00vr" path="res://Buttons/Level-5.png" id="13_2hksm"]
 [ext_resource type="Texture2D" uid="uid://dwqhvvsfapbey" path="res://Buttons/Level-5p.png" id="14_oj2gx"]
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iaxao"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6udjo"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x46cw"]
+
 [node name="Control" type="Control" unique_id=202115777]
 layout_mode = 3
 anchors_preset = 15
@@ -87,21 +93,23 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -72.5
+offset_left = -73.5
 offset_top = 4.0
-offset_right = 75.5
+offset_right = 74.5
 offset_bottom = 34.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_iaxao")
 text = "Settings"
 
 [node name="Label" type="Label" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=1183002941]
 layout_mode = 0
 offset_left = 6.0
-offset_top = 34.0
-offset_right = 68.0
-offset_bottom = 52.0
+offset_top = 36.0
+offset_right = 96.0
+offset_bottom = 54.0
 theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxTexture_6udjo")
 text = "Resolution"
 
 [node name="Resolution" type="OptionButton" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=2098808674]
@@ -131,6 +139,7 @@ offset_top = 81.0
 offset_right = 79.0
 offset_bottom = 101.0
 theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxTexture_x46cw")
 text = "Window mode"
 
 [node name="Window" type="OptionButton" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=1168747169]
@@ -249,7 +258,7 @@ offset_bottom = 114.0
 theme = ExtResource("1_ihied")
 theme_override_font_sizes/font_size = 8
 text = " Level 3 - Normal
- Score: 12500"
+ Score: 10000"
 
 [node name="Label4" type="Label" parent="SelectLevel" unique_id=1613735269]
 layout_mode = 0
@@ -260,7 +269,7 @@ offset_bottom = 151.0
 theme = ExtResource("1_ihied")
 theme_override_font_sizes/font_size = 8
 text = " Level 4 - Normal
- Score 14000"
+ Score: 4000"
 
 [node name="Label5" type="Label" parent="SelectLevel" unique_id=1467448593]
 layout_mode = 0
@@ -271,7 +280,7 @@ offset_bottom = 188.0
 theme = ExtResource("1_ihied")
 theme_override_font_sizes/font_size = 8
 text = " Level 5 - Hard
- Score: 20000"
+ Score: 6000"
 
 [connection signal="pressed" from="HBoxContainer/MarginContainer/CenterContainer2/BoxMain/StartB" to="." method="_on_start_b_pressed"]
 [connection signal="pressed" from="HBoxContainer/MarginContainer/CenterContainer2/BoxMain/SettingsB" to="." method="_on_settings_b_pressed"]

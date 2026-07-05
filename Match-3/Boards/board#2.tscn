@@ -30,6 +30,8 @@ tile_size = Vector2i(32, 32)
 sources/2 = SubResource("TileSetAtlasSource_8ngtt")
 sources/0 = SubResource("TileSetAtlasSource_oiw0n")
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_spr3m"]
+
 [node name="board#2" type="Node2D" unique_id=963179575]
 script = ExtResource("1_8ngtt")
 
@@ -52,7 +54,6 @@ layer_0/tile_data = PackedInt32Array(0, 65536, 1, 1, 65536, 1, 65537, 2, 0, 6553
 anchors_preset = -1
 offset_left = -112.0
 offset_top = 64.0
-offset_right = -16.0
 offset_bottom = 98.0
 theme = ExtResource("2_8yjnb")
 
@@ -60,7 +61,6 @@ theme = ExtResource("2_8yjnb")
 anchors_preset = -1
 offset_left = -112.0
 offset_top = 98.0
-offset_right = -16.0
 offset_bottom = 132.0
 theme = ExtResource("2_8yjnb")
 
@@ -161,6 +161,7 @@ offset_top = 75.0
 offset_right = 287.0
 offset_bottom = 91.0
 theme = ExtResource("2_8yjnb")
+theme_override_styles/normal = SubResource("StyleBoxTexture_spr3m")
 text = "Game Over"
 
 [node name="Restart" type="Button" parent="LoseMenu" unique_id=623204928]

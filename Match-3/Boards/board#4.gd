@@ -17,13 +17,13 @@ var Selected_Piece = null #create variable to store selected element
 var Selected_Sprite = null 
 var Is_Animating = false
 var No_More_Moves := false
-var Moves_Left = 5
+var Moves_Left = 12
 var Moves_Label: Label
 var Moves_LabelS: Label
 var Score = 0
 var Score_Label: Label
 var Score_LabelS: Label
-var Limit = 2500
+var Limit = 4000
 
 
 func _ready():
@@ -483,7 +483,6 @@ func refill_board():
 				var tween = get_tree().create_tween()
 				tween.tween_property(Piece, "position", Target_Pos, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
-
 func setup_level_mask():
 	LevelMask = []
 	for r in range(Rows):
@@ -491,10 +490,27 @@ func setup_level_mask():
 		for c in range(Cols):
 			row_mask.append(true) 
 		LevelMask.append(row_mask)
-	LevelMask[3][3] = false
-	LevelMask[3][4] = false
-	LevelMask[4][3] = false
-	LevelMask[4][4] = false
+	LevelMask[2][0] = false
+	LevelMask[3][0] = false
+	LevelMask[4][0] = false
+	LevelMask[5][0] = false
+	LevelMask[2][1] = false
+	LevelMask[3][1] = false
+	LevelMask[4][1] = false
+	LevelMask[5][1] = false
+	LevelMask[2][2] = false
+	LevelMask[5][2] = false
+	
+	LevelMask[2][7] = false
+	LevelMask[3][7] = false
+	LevelMask[4][7] = false
+	LevelMask[5][7] = false
+	LevelMask[2][6] = false
+	LevelMask[3][6] = false
+	LevelMask[4][6] = false
+	LevelMask[5][6] = false
+	LevelMask[2][5] = false
+	LevelMask[5][5] = false
 
 
 func game_over():
@@ -535,4 +551,4 @@ func _on_restart_pressed() -> void:
 
 func _on_button_continue_pressed() -> void:
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://Boards/board#2.tscn")
+	get_tree().change_scene_to_file("res://Boards/board#5.tscn")

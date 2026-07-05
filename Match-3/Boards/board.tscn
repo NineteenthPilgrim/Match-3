@@ -73,7 +73,6 @@ theme = ExtResource("4_6dnf8")
 
 [node name="PauseMenu" type="CanvasLayer" parent="." unique_id=1367059750]
 process_mode = 2
-visible = false
 
 [node name="PanelMenu" type="Panel" parent="PauseMenu" unique_id=2086979154]
 process_mode = 2
@@ -139,7 +138,6 @@ text = "Exit"
 
 [node name="LoseMenu" type="CanvasLayer" parent="." unique_id=496974391]
 process_mode = 2
-visible = false
 
 [node name="PanelLose" type="Panel" parent="LoseMenu" unique_id=2040140331]
 anchors_preset = 8
@@ -182,7 +180,6 @@ text = "Exit"
 
 [node name="WinMenu" type="CanvasLayer" parent="." unique_id=928407949]
 process_mode = 2
-visible = false
 
 [node name="PanelWin" type="Panel" parent="WinMenu" unique_id=1721984707]
 anchors_preset = 8
