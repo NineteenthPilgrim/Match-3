@@ -61,7 +61,6 @@ texture_pressed = ExtResource("4_nppo8")
 anchors_preset = -1
 offset_left = -112.0
 offset_top = 64.0
-offset_right = -16.0
 offset_bottom = 98.0
 theme = ExtResource("4_6dnf8")
 
@@ -69,7 +68,6 @@ theme = ExtResource("4_6dnf8")
 anchors_preset = -1
 offset_left = -112.0
 offset_top = 98.0
-offset_right = -16.0
 offset_bottom = 132.0
 theme = ExtResource("4_6dnf8")
 
@@ -162,7 +160,6 @@ offset_left = 195.0
 offset_top = 75.0
 offset_right = 287.0
 offset_bottom = 91.0
-theme = ExtResource("4_6dnf8")
 text = "Game Over"
 
 [node name="Restart" type="Button" parent="LoseMenu" unique_id=391981923]

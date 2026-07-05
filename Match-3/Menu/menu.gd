@@ -1,9 +1,11 @@
 extends Control
 @onready var centerb = $HBoxContainer/BoxSettings
 @onready var leftb = $HBoxContainer/MarginContainer/CenterContainer2/BoxMain
+@onready var slevel = $SelectLevel
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	slevel.visible = false
 	hide_setting() 
 	$HBoxContainer/BoxSettings/ColorRect/Window.select(0 if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN else 1)
 
@@ -66,4 +68,42 @@ func _on_window_item_selected(index: int) -> void:
 
 
 func _on_start_b_pressed() -> void:
+	slevel.visible = true
+	slevel.mouse_filter = Control.MOUSE_FILTER_STOP
+	slevel.grab_focus()
+	$HBoxContainer/MarginContainer/CenterContainer2/BoxMain/StartB.disabled = true
+	$HBoxContainer/MarginContainer/CenterContainer2/BoxMain/StartB.focus_mode = Control.FOCUS_NONE
+	$HBoxContainer/MarginContainer/CenterContainer2/BoxMain/SettingsB.disabled = true
+	$HBoxContainer/MarginContainer/CenterContainer2/BoxMain/SettingsB.focus_mode = Control.FOCUS_NONE
+	$HBoxContainer/MarginContainer/CenterContainer2/BoxMain/ExitB.disabled = true
+	$HBoxContainer/MarginContainer/CenterContainer2/BoxMain/ExitB.focus_mode = Control.FOCUS_NONE
+
+
+func _on_b_close_pressed() -> void:
+	slevel.visible = false
+	$HBoxContainer/MarginContainer/CenterContainer2/BoxMain/StartB.disabled = false
+	$HBoxContainer/MarginContainer/CenterContainer2/BoxMain/StartB.focus_mode = Control.FOCUS_ALL
+	$HBoxContainer/MarginContainer/CenterContainer2/BoxMain/SettingsB.disabled = false
+	$HBoxContainer/MarginContainer/CenterContainer2/BoxMain/SettingsB.focus_mode = Control.FOCUS_ALL
+	$HBoxContainer/MarginContainer/CenterContainer2/BoxMain/ExitB.disabled = false
+	$HBoxContainer/MarginContainer/CenterContainer2/BoxMain/ExitB.focus_mode = Control.FOCUS_ALL
+
+
+func _on_texture_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://Boards/board.tscn")
+
+
+func _on_texture_button_2_pressed() -> void:
+	get_tree().change_scene_to_file("res://Boards/board#2.tscn")
+
+
+func _on_texture_button_3_pressed() -> void:
+	get_tree().change_scene_to_file("res://Boards/board#3.tscn")
+
+
+func _on_texture_button_4_pressed() -> void:
+	get_tree().change_scene_to_file("res://Boards/board#4.tscn")
+
+
+func _on_texture_button_5_pressed() -> void:
+	get_tree().change_scene_to_file("res://Boards/board#5.tscn")
