@@ -227,7 +227,6 @@ func is_in_match(piece: Area2D) -> bool:
 
 func find_matches() -> Array:
 	var groups = []
-	#var Matches_dict = {}
 	for row in range(Rows):				#check rows
 		if Grid[row] == null:
 			continue
@@ -235,7 +234,6 @@ func find_matches() -> Array:
 		var Start_col = 0
 		for col in range(1, Cols):
 			if not LevelMask[row][col] or not LevelMask[row][col-1]:
-				##
 				if not LevelMask[row][col] or not LevelMask[row][col-1] or Grid[row] == null or Grid[row].size() <= col or Grid[row].size() <= col-1 or Grid[row][col] == null or Grid[row][col-1] == null:
 					if Count >= 3:
 						var group = []
@@ -252,30 +250,20 @@ func find_matches() -> Array:
 			if Current == Previous: 
 				Count += 1
 				if Count >= 3 and col == Cols - 1:
-					##
 					var group = []
-					##
 					for i in range(Start_col, col + 1):
-						##
 						if LevelMask[row][i] and Grid[row].size() > i and Grid[row][i] != null:
 							group.append(Grid[row][i])
 					if group.size() > 0:
 						groups.append(group)
-						##
-						#if LevelMask[row][i] and Grid[row].size() > i and Grid[row][i] != null:
-							#Matches_dict[Grid[row][i]] = true
 			else:
 				if Count >= 3:
 					var group = []
 					for i in range(Start_col, col):
-						##
 						if LevelMask[row][i] and Grid[row].size() > i and Grid[row][i] != null:
 							group.append(Grid[row][i])
 						if group.size() > 0:
 							groups.append(group)
-						##
-						#if LevelMask[row][i] and Grid[row].size() > i and Grid[row][i] != null:
-							#Matches_dict[Grid[row][i]] = true
 				Count = 1
 				Start_col = col
 	
@@ -291,44 +279,6 @@ func find_matches() -> Array:
 							group.append(Grid[i][col])
 					if group.size() > 0:
 						groups.append(group)
-			#if not LevelMask[row][col] or not LevelMask[row-1][col]:
-				##
-				#if Count >= 3:
-					#for i in range(Start_row, row):
-						#if LevelMask[i][col] and Grid[i].size() > col and Grid[i][col] != null:
-							#Matches_dict[Grid[i][col]] = true
-				##
-				#Count = 1
-				#Start_row = row
-				#continue
-			#if Grid[row] == null or Grid[row-1] == null:
-				##
-				#if Count >= 3:
-					#for i in range(Start_row, row):
-						#if LevelMask[i][col] and Grid[i].size() > col and Grid[i][col] != null:
-							#Matches_dict[Grid[i][col]] = true
-				##
-				#Count = 1
-				#Start_row = row
-				#continue
-			#if Grid[row].size() <= col or Grid[row-1].size() <= col:
-				##
-				#if Count >= 3:
-					#for i in range(Start_row, row):
-						#if LevelMask[i][col] and Grid[i].size() > col and Grid[i][col] != null:
-							#Matches_dict[Grid[i][col]] = true
-				##
-				#Count = 1
-				#Start_row = row
-				#continue
-			#if Grid[row][col] == null or Grid[row-1][col] == null:
-				##
-				#if Grid[row][col] == null or Grid[row-1][col] == null:
-					#if Count >= 3:
-						#for i in range(Start_row, row):
-							#if LevelMask[i][col] and Grid[i].size() > col and Grid[i][col] != null:
-								#Matches_dict[Grid[i][col]] = true
-				##
 				Count = 1
 				Start_row = row
 				continue
@@ -345,8 +295,6 @@ func find_matches() -> Array:
 							group.append(Grid[i][col])
 						if group.size() > 0:
 							groups.append(group)
-						#if LevelMask[i][col] and Grid[i].size() > col and Grid[i][col] != null:
-							#Matches_dict[Grid[i][col]] = true
 			else:
 				if Count >= 3:
 					##
@@ -357,12 +305,9 @@ func find_matches() -> Array:
 							group.append(Grid[i][col])
 						if group.size() > 0:
 							groups.append(group)
-						#if LevelMask[i][col] and Grid[i].size() > col and Grid[i][col] != null:
-							#Matches_dict[Grid[i][col]] = true
 				Count = 1
 				Start_row = row 
-				
-	##
+	
 	var merged = []
 	for g in groups:
 		var added = false
@@ -398,10 +343,7 @@ func find_matches() -> Array:
 					break
 			if changed:
 				break
-
 	return merged
-	##
-	#return Matches_dict.keys()
 
 
 func highlight_matches(Matches: Array):
@@ -418,8 +360,6 @@ func highlight_matches(Matches: Array):
 
 func remove_matches(Matches: Array):	#added match removal function
 	Is_Animating = true
-	#var count = Matches.size()
-	#
 	for group in Matches:
 		var group_size = group.size()
 		if group_size == 3:
@@ -506,10 +446,10 @@ func refill_board():
 		preload("res://sprites/Red-match-3.png")
 	]
 	var s_textures = [
-	preload("res://sprites/p-Blue-match-3.png"),
-	preload("res://sprites/p-Green-match-3.png"),
-	preload("res://sprites/p-Purple-match-3.png"),
-	preload("res://sprites/p-Red-match-3.png")
+		preload("res://sprites/p-Blue-match-3.png"),
+		preload("res://sprites/p-Green-match-3.png"),
+		preload("res://sprites/p-Purple-match-3.png"),
+		preload("res://sprites/p-Red-match-3.png")
 	]
 	for row in range(Rows):
 		for col in range(Cols):
@@ -534,7 +474,7 @@ func refill_board():
 				Collision.shape.extents = Vector2(Tile_Size/2, Tile_Size/2)
 				Piece.add_child(Collision)
 				var Target_Pos = Vector2(col * Tile_Size + Tile_Size/2, row * Tile_Size + Tile_Size/2)
-				Piece.position = Target_Pos - Vector2(0, Tile_Size * 2)
+				Piece.position = Target_Pos - Vector2(0, Tile_Size * 6)
 				Piece.connect("input_event", Callable(self, "_on_piece_clicked").bind(Piece))
 				add_child(Piece)
 				Grid[row][col] = Piece
