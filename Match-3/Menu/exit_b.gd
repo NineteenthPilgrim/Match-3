@@ -7,7 +7,6 @@ func _ready() -> void:
 
 
 func _on_pressed() -> void:
-	print("Quit")
 	get_tree().quit()
 
 

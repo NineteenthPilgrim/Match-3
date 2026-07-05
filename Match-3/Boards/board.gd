@@ -6,6 +6,10 @@ extends Node2D
 @onready var Exit_B = $PauseMenu/Exit
 @onready var Lose_Menu := $LoseMenu
 @onready var Win_Menu := $WinMenu
+@onready var Sfx_Click = $SfxClick
+@onready var Sfx_Close = $SfxClose
+@onready var Sfx_GameOver = $SfxGameOver
+@onready var Sfx_Win = $SfxWin
 
 const Rows = 8
 const Cols = 8
@@ -108,19 +112,15 @@ func _on_piece_clicked(viewport, event, shape_index, piece):	#call function on e
 				var sel := piece.get_meta("selected_tex") as Texture2D
 				if sel:
 					sprite.texture = sel
-				print("First element selected")
 		else:
 			if neighbors(Selected_Piece.position, piece.position):
 				swap_pieces(Selected_Piece, piece)
-				print("Pieces swapped")
 			else:
-				print("Not neighbors")
 				var orig := Selected_Piece.get_meta("orig_tex") as Texture2D
 				if orig:
 					Selected_Piece.get_node("Sprite2D").texture = orig   
 			Selected_Piece = null
 			Selected_Sprite = null
-			print("First element is no longer selected")
 
 
 func neighbors(Pos1: Vector2, Pos2: Vector2) -> bool:
@@ -170,7 +170,7 @@ func swap_pieces(Piece1: Area2D, Piece2: Area2D):
 			if not flat_matches.has(p):
 				flat_matches.append(p)
 	if flat_matches.size() > 0:
-		print("Found matches groups: ", groups.size(), " total pieces: ", flat_matches.size()) 
+		Sfx_Click.play()
 		highlight_matches(flat_matches)
 		Moves_Left -= 1
 		Moves_Label.text = "Moves"
@@ -179,7 +179,7 @@ func swap_pieces(Piece1: Area2D, Piece2: Area2D):
 			No_More_Moves = true
 		await remove_matches(groups)
 	else:
-		print("No matches")
+		Sfx_Close.play()
 		Temp_Pos = Piece1.position
 		Piece1.position = Piece2.position
 		Piece2.position = Temp_Pos
@@ -498,12 +498,12 @@ func setup_level_mask():
 
 
 func game_over():
-	print("Game Over!")
+	Sfx_GameOver.play()
 	Lose_Menu.visible = true
 
 
 func game_win():
-	print("You Won!")
+	Sfx_Win.play()
 	Win_Menu.visible = true
 	get_tree().paused = true
 
@@ -514,25 +514,34 @@ func _process(delta: float) -> void:
 
 
 func _on_menu_button_pressed() -> void:
+	Sfx_Click.play()
+	await get_tree().create_timer(0.1).timeout
 	Pause_Menu.visible = true
 	get_tree().paused = true
 
 
 func _on_resume_pressed() -> void:
+	Sfx_Click.play()
 	get_tree().paused = false
 	Pause_Menu.visible = false
 
 
 func _on_exit_pressed() -> void:
+	Sfx_Close.play()
+	await get_tree().create_timer(0.2).timeout
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://Menu/menu.tscn")
 
 
 func _on_restart_pressed() -> void:
+	Sfx_Click.play()
+	await get_tree().create_timer(0.2).timeout
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 
 
 func _on_button_continue_pressed() -> void:
+	Sfx_Click.play()
+	await get_tree().create_timer(0.2).timeout
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://Boards/board#2.tscn")

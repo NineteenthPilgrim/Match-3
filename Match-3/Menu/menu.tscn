@@ -14,6 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://52ftch68n0d3" path="res://Buttons/Level-4p.png" id="12_oq131"]
 [ext_resource type="Texture2D" uid="uid://isdwmsua00vr" path="res://Buttons/Level-5.png" id="13_2hksm"]
 [ext_resource type="Texture2D" uid="uid://dwqhvvsfapbey" path="res://Buttons/Level-5p.png" id="14_oj2gx"]
+[ext_resource type="AudioStream" uid="uid://b0uj8mcwkdocj" path="res://Sound/Click.mp3" id="15_uu4eq"]
+[ext_resource type="AudioStream" uid="uid://boc1d8jjelj0s" path="res://Sound/Close.mp3" id="16_pxa7u"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iaxao"]
 
@@ -281,6 +283,14 @@ theme = ExtResource("1_ihied")
 theme_override_font_sizes/font_size = 8
 text = " Level 5 - Hard
  Score: 6000"
+
+[node name="SfxClick" type="AudioStreamPlayer2D" parent="." unique_id=847692409]
+stream = ExtResource("15_uu4eq")
+bus = &"SFX"
+
+[node name="SfxClose" type="AudioStreamPlayer2D" parent="." unique_id=959647664]
+stream = ExtResource("16_pxa7u")
+bus = &"SFX"
 
 [connection signal="pressed" from="HBoxContainer/MarginContainer/CenterContainer2/BoxMain/StartB" to="." method="_on_start_b_pressed"]
 [connection signal="pressed" from="HBoxContainer/MarginContainer/CenterContainer2/BoxMain/SettingsB" to="." method="_on_settings_b_pressed"]

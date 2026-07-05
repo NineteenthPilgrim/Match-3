@@ -8,6 +8,10 @@
 [ext_resource type="Theme" uid="uid://itkn8nir8uy8" path="res://my_theme.tres" id="4_6dnf8"]
 [ext_resource type="Texture2D" uid="uid://cr6kuals77aic" path="res://Buttons/Settings-button-pressed.png" id="4_nppo8"]
 [ext_resource type="FontFile" uid="uid://dk5pm2127facw" path="res://Fonts/Occular.ttf" id="6_00i6j"]
+[ext_resource type="AudioStream" uid="uid://b0uj8mcwkdocj" path="res://Sound/Click.mp3" id="9_raifm"]
+[ext_resource type="AudioStream" uid="uid://boc1d8jjelj0s" path="res://Sound/Close.mp3" id="10_a24k8"]
+[ext_resource type="AudioStream" uid="uid://dggnbx2xoasgw" path="res://Sound/GameOver.mp3" id="11_rmc0r"]
+[ext_resource type="AudioStream" uid="uid://bbijwbl0okbpj" path="res://Sound/Win.mp3" id="12_kj8n3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lje5m"]
 texture = ExtResource("3_lje5m")
@@ -209,6 +213,22 @@ offset_bottom = 120.0
 theme = ExtResource("4_6dnf8")
 theme_override_font_sizes/font_size = 8
 text = "Continue"
+
+[node name="SfxClick" type="AudioStreamPlayer2D" parent="." unique_id=1120331288]
+process_mode = 3
+stream = ExtResource("9_raifm")
+
+[node name="SfxClose" type="AudioStreamPlayer2D" parent="." unique_id=1927224752]
+process_mode = 3
+stream = ExtResource("10_a24k8")
+
+[node name="SfxGameOver" type="AudioStreamPlayer2D" parent="." unique_id=405994457]
+process_mode = 3
+stream = ExtResource("11_rmc0r")
+
+[node name="SfxWin" type="AudioStreamPlayer2D" parent="." unique_id=1042951002]
+process_mode = 3
+stream = ExtResource("12_kj8n3")
 
 [connection signal="pressed" from="MenuButton" to="." method="_on_menu_button_pressed"]
 [connection signal="pressed" from="PauseMenu/Resume" to="." method="_on_resume_pressed"]

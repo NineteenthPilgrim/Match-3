@@ -2,6 +2,9 @@ extends Control
 @onready var centerb = $HBoxContainer/BoxSettings
 @onready var leftb = $HBoxContainer/MarginContainer/CenterContainer2/BoxMain
 @onready var slevel = $SelectLevel
+@onready var Sfx_Click = $SfxClick
+@onready var Sfx_Close = $SfxClose
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -45,10 +48,12 @@ func _set_children_interactive(node: Node, enable: bool) -> void:
 
 func _on_settings_b_pressed() -> void:
 	show_settings()
+	Sfx_Click.play()
 
 
 func _on_close_pressed() -> void:
 	hide_setting()
+	Sfx_Close.play()
 
 
 func _on_option_button_item_selected(index: int) -> void:
@@ -69,6 +74,7 @@ func _on_window_item_selected(index: int) -> void:
 
 func _on_start_b_pressed() -> void:
 	slevel.visible = true
+	Sfx_Click.play()
 	slevel.mouse_filter = Control.MOUSE_FILTER_STOP
 	slevel.grab_focus()
 	$HBoxContainer/MarginContainer/CenterContainer2/BoxMain/StartB.disabled = true
@@ -81,6 +87,7 @@ func _on_start_b_pressed() -> void:
 
 func _on_b_close_pressed() -> void:
 	slevel.visible = false
+	Sfx_Close.play()
 	$HBoxContainer/MarginContainer/CenterContainer2/BoxMain/StartB.disabled = false
 	$HBoxContainer/MarginContainer/CenterContainer2/BoxMain/StartB.focus_mode = Control.FOCUS_ALL
 	$HBoxContainer/MarginContainer/CenterContainer2/BoxMain/SettingsB.disabled = false
@@ -90,20 +97,30 @@ func _on_b_close_pressed() -> void:
 
 
 func _on_texture_button_pressed() -> void:
+	Sfx_Click.play()
+	await get_tree().create_timer(0.2).timeout
 	get_tree().change_scene_to_file("res://Boards/board.tscn")
 
 
 func _on_texture_button_2_pressed() -> void:
+	Sfx_Click.play()
+	await get_tree().create_timer(0.2).timeout
 	get_tree().change_scene_to_file("res://Boards/board#2.tscn")
 
 
 func _on_texture_button_3_pressed() -> void:
+	Sfx_Click.play()
+	await get_tree().create_timer(0.2).timeout
 	get_tree().change_scene_to_file("res://Boards/board#3.tscn")
 
 
 func _on_texture_button_4_pressed() -> void:
+	Sfx_Click.play()
+	await get_tree().create_timer(0.2).timeout
 	get_tree().change_scene_to_file("res://Boards/board#4.tscn")
 
 
 func _on_texture_button_5_pressed() -> void:
+	Sfx_Click.play()
+	await get_tree().create_timer(0.2).timeout
 	get_tree().change_scene_to_file("res://Boards/board#5.tscn")
