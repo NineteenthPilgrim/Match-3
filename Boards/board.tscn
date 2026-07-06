@@ -1,0 +1,242 @@
+[gd_scene format=3 uid="uid://1xqbupckriq7"]
+
+[ext_resource type="Script" uid="uid://duhrr5u0psq4r" path="res://Boards/board.gd" id="1_p0ybc"]
+[ext_resource type="Texture2D" uid="uid://br6gwnyl31m0j" path="res://sprites/BackgroundB.png" id="2_7lksm"]
+[ext_resource type="Texture2D" uid="uid://ji7s3l7670v7" path="res://sprites/Tile-match-3.png" id="2_psm7c"]
+[ext_resource type="Texture2D" uid="uid://djtcpk61rinmk" path="res://sprites/Tile-match-3-B.png" id="3_lje5m"]
+[ext_resource type="Texture2D" uid="uid://b1j767m8jb101" path="res://Buttons/Settings-button.png" id="3_yweu8"]
+[ext_resource type="Theme" uid="uid://itkn8nir8uy8" path="res://my_theme.tres" id="4_6dnf8"]
+[ext_resource type="Texture2D" uid="uid://cr6kuals77aic" path="res://Buttons/Settings-button-pressed.png" id="4_nppo8"]
+[ext_resource type="FontFile" uid="uid://dk5pm2127facw" path="res://Fonts/Occular.ttf" id="6_00i6j"]
+[ext_resource type="AudioStream" uid="uid://b0uj8mcwkdocj" path="res://Sound/Click.mp3" id="9_raifm"]
+[ext_resource type="AudioStream" uid="uid://boc1d8jjelj0s" path="res://Sound/Close.mp3" id="10_a24k8"]
+[ext_resource type="AudioStream" uid="uid://dggnbx2xoasgw" path="res://Sound/GameOver.mp3" id="11_rmc0r"]
+[ext_resource type="AudioStream" uid="uid://bbijwbl0okbpj" path="res://Sound/Win.mp3" id="12_kj8n3"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lje5m"]
+texture = ExtResource("3_lje5m")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p6mp0"]
+texture = ExtResource("2_psm7c")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_odgvp"]
+tile_size = Vector2i(32, 32)
+sources/2 = SubResource("TileSetAtlasSource_p6mp0")
+sources/0 = SubResource("TileSetAtlasSource_lje5m")
+
+[node name="Board#1" type="Node2D" unique_id=1469344524]
+process_mode = 1
+script = ExtResource("1_p0ybc")
+metadata/_edit_vertical_guides_ = [166.0]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=868863028]
+offset_left = -112.0
+offset_top = -7.0
+offset_right = 368.0
+offset_bottom = 263.0
+texture = ExtResource("2_7lksm")
+
+[node name="TileMap" type="TileMap" parent="." unique_id=433715692]
+tile_set = SubResource("TileSet_odgvp")
+rendering_quadrant_size = 32
+format = 2
+layer_0/tile_data = PackedInt32Array(0, 2, 0, 1, 65538, 0, 65537, 65538, 0, 65539, 65538, 0, 5, 65538, 0, 7, 65538, 0, 131079, 65538, 0, 458759, 65538, 0, 327684, 65538, 0, 327682, 65538, 0, 196609, 65538, 0, 327680, 65538, 0, 196612, 65536, 0, 131077, 65538, 0, 458754, 65538, 0, 262150, 65538, 0, 2, 2, 0, 131075, 2, 0, 131076, 2, 0, 262146, 2, 0, 393216, 2, 0, 458753, 2, 0, 458756, 2, 0, 393221, 2, 0, 327687, 2, 0, 458757, 2, 1, 327686, 2, 1, 262148, 65536, 1, 393217, 2, 1, 458752, 2, 1, 131072, 2, 1, 131074, 2, 1, 65540, 2, 1, 65541, 2, 1, 196615, 2, 1, 262149, 2, 1, 393219, 65538, 1, 393220, 65538, 1, 262145, 65538, 1, 196610, 65538, 1, 131073, 65538, 1, 3, 65538, 1, 65542, 65538, 1, 131078, 65538, 1, 393223, 65538, 1, 262144, 65538, 1, 393218, 65538, 1, 458758, 65538, 1, 327685, 2, 0, 262147, 0, 1, 327681, 65538, 0, 458755, 65538, 0, 393222, 65538, 0, 262151, 2, 1, 196613, 2, 1, 196608, 2, 1, 65538, 2, 1, 327683, 65538, 1, 6, 65538, 0, 196614, 2, 1, 65543, 2, 1, 4, 65538, 1, 65536, 2, 1, 196611, 0, 0)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2016229736]
+
+[node name="MenuButton" type="TextureButton" parent="." unique_id=1297958959]
+offset_left = -96.0
+offset_right = -64.0
+offset_bottom = 32.0
+texture_normal = ExtResource("3_yweu8")
+texture_pressed = ExtResource("4_nppo8")
+
+[node name="Score" type="Panel" parent="." unique_id=1869384864]
+anchors_preset = -1
+offset_left = -112.0
+offset_top = 64.0
+offset_bottom = 98.0
+theme = ExtResource("4_6dnf8")
+
+[node name="Moves" type="Panel" parent="." unique_id=689299469]
+anchors_preset = -1
+offset_left = -112.0
+offset_top = 98.0
+offset_bottom = 132.0
+theme = ExtResource("4_6dnf8")
+
+[node name="PauseMenu" type="CanvasLayer" parent="." unique_id=1367059750]
+process_mode = 2
+
+[node name="PanelMenu" type="Panel" parent="PauseMenu" unique_id=2086979154]
+process_mode = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_6dnf8")
+
+[node name="PauseLabel" type="Label" parent="PauseMenu" unique_id=1450826510]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.0
+offset_top = -60.0
+offset_right = 26.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_00i6j")
+text = "Pause"
+
+[node name="Resume" type="Button" parent="PauseMenu" unique_id=241189907]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_6dnf8")
+theme_override_font_sizes/font_size = 8
+text = "Resume"
+
+[node name="Exit" type="Button" parent="PauseMenu" unique_id=1120287507]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -10.0
+offset_right = 32.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_6dnf8")
+theme_override_font_sizes/font_size = 8
+text = "Exit"
+
+[node name="LoseMenu" type="CanvasLayer" parent="." unique_id=496974391]
+process_mode = 2
+
+[node name="PanelLose" type="Panel" parent="LoseMenu" unique_id=2040140331]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_6dnf8")
+
+[node name="LoseLabel" type="Label" parent="LoseMenu" unique_id=1809144979]
+offset_left = 195.0
+offset_top = 75.0
+offset_right = 287.0
+offset_bottom = 91.0
+text = "Game Over"
+
+[node name="Restart" type="Button" parent="LoseMenu" unique_id=391981923]
+offset_left = 208.0
+offset_top = 95.0
+offset_right = 272.0
+offset_bottom = 115.0
+theme = ExtResource("4_6dnf8")
+theme_override_font_sizes/font_size = 8
+text = "Restart"
+
+[node name="Exit" type="Button" parent="LoseMenu" unique_id=735071235]
+offset_left = 208.0
+offset_top = 125.0
+offset_right = 272.0
+offset_bottom = 145.0
+theme = ExtResource("4_6dnf8")
+theme_override_font_sizes/font_size = 8
+text = "Exit"
+
+[node name="WinMenu" type="CanvasLayer" parent="." unique_id=928407949]
+process_mode = 2
+
+[node name="PanelWin" type="Panel" parent="WinMenu" unique_id=1721984707]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_6dnf8")
+
+[node name="LabelWin" type="Label" parent="WinMenu" unique_id=1052078809]
+offset_left = 202.0
+offset_top = 75.0
+offset_right = 278.0
+offset_bottom = 91.0
+text = "You won!"
+
+[node name="ButtonContinue" type="Button" parent="WinMenu" unique_id=1941519595]
+offset_left = 208.0
+offset_top = 100.0
+offset_right = 272.0
+offset_bottom = 120.0
+theme = ExtResource("4_6dnf8")
+theme_override_font_sizes/font_size = 8
+text = "Continue"
+
+[node name="SfxClick" type="AudioStreamPlayer2D" parent="." unique_id=1120331288]
+process_mode = 3
+stream = ExtResource("9_raifm")
+bus = &"SFX"
+
+[node name="SfxClose" type="AudioStreamPlayer2D" parent="." unique_id=1927224752]
+process_mode = 3
+stream = ExtResource("10_a24k8")
+bus = &"SFX"
+
+[node name="SfxGameOver" type="AudioStreamPlayer2D" parent="." unique_id=405994457]
+process_mode = 3
+stream = ExtResource("11_rmc0r")
+bus = &"SFX"
+
+[node name="SfxWin" type="AudioStreamPlayer2D" parent="." unique_id=1042951002]
+process_mode = 3
+stream = ExtResource("12_kj8n3")
+bus = &"SFX"
+
+[connection signal="pressed" from="MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="PauseMenu/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="PauseMenu/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="LoseMenu/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="LoseMenu/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="WinMenu/ButtonContinue" to="." method="_on_button_continue_pressed"]

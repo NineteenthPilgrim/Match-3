@@ -1,0 +1,330 @@
+[gd_scene format=3 uid="uid://bfrgk3iouidyc"]
+
+[ext_resource type="Theme" uid="uid://itkn8nir8uy8" path="res://my_theme.tres" id="1_ihied"]
+[ext_resource type="Script" uid="uid://c6u71s00xq5rn" path="res://Menu/exit_b.gd" id="1_rwxi6"]
+[ext_resource type="Script" uid="uid://dp22plgiv62bp" path="res://Menu/menu.gd" id="2_raj00"]
+[ext_resource type="Texture2D" uid="uid://djjewr1d602p1" path="res://sprites/Background.png" id="3_8w4re"]
+[ext_resource type="Texture2D" uid="uid://b0pqppoj6jq6t" path="res://Buttons/R-C.png" id="5_1wnsb"]
+[ext_resource type="Texture2D" uid="uid://dmuskvn1vdk0w" path="res://Buttons/Level-1.png" id="5_ofseh"]
+[ext_resource type="Texture2D" uid="uid://c6fhk34a3kne" path="res://Buttons/R-UC.png" id="6_oq131"]
+[ext_resource type="Texture2D" uid="uid://bckritsxbuf6c" path="res://Buttons/Level-1p.png" id="6_w6voe"]
+[ext_resource type="Texture2D" uid="uid://csym7t2rsspdn" path="res://Buttons/Level-2.png" id="7_5s5no"]
+[ext_resource type="Texture2D" uid="uid://1u5i8l0i81in" path="res://Buttons/Level-2p.png" id="8_v3yle"]
+[ext_resource type="Texture2D" uid="uid://c0vhh6mny05oy" path="res://Buttons/Level-3.png" id="9_uu4eq"]
+[ext_resource type="Texture2D" uid="uid://cx57c5vpgq8j0" path="res://Buttons/Level-3p.png" id="10_pxa7u"]
+[ext_resource type="Texture2D" uid="uid://uhx1jefybvsl" path="res://Buttons/Level-4.png" id="11_1wnsb"]
+[ext_resource type="Texture2D" uid="uid://52ftch68n0d3" path="res://Buttons/Level-4p.png" id="12_oq131"]
+[ext_resource type="Texture2D" uid="uid://isdwmsua00vr" path="res://Buttons/Level-5.png" id="13_2hksm"]
+[ext_resource type="Texture2D" uid="uid://dwqhvvsfapbey" path="res://Buttons/Level-5p.png" id="14_oj2gx"]
+[ext_resource type="AudioStream" uid="uid://b0uj8mcwkdocj" path="res://Sound/Click.mp3" id="15_uu4eq"]
+[ext_resource type="AudioStream" uid="uid://boc1d8jjelj0s" path="res://Sound/Close.mp3" id="16_pxa7u"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iaxao"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6udjo"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x46cw"]
+
+[node name="Control" type="Control" unique_id=202115777]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+theme = ExtResource("1_ihied")
+script = ExtResource("2_raj00")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=231593452]
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 270.0
+texture = ExtResource("3_8w4re")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=162079868]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer" unique_id=298428688]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = -50
+
+[node name="CenterContainer2" type="CenterContainer" parent="HBoxContainer/MarginContainer" unique_id=2044689890]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BoxMain" type="VBoxContainer" parent="HBoxContainer/MarginContainer/CenterContainer2" unique_id=1308631216]
+layout_mode = 2
+size_flags_horizontal = 3
+offset_transform_enabled = true
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="StartB" type="Button" parent="HBoxContainer/MarginContainer/CenterContainer2/BoxMain" unique_id=640926955]
+layout_mode = 2
+text = "Start"
+
+[node name="SettingsB" type="Button" parent="HBoxContainer/MarginContainer/CenterContainer2/BoxMain" unique_id=890364984]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+text = "Settings"
+
+[node name="ExitB" type="Button" parent="HBoxContainer/MarginContainer/CenterContainer2/BoxMain" unique_id=1226195391]
+custom_minimum_size = Vector2(90, 24)
+layout_mode = 2
+text = "Exit"
+script = ExtResource("1_rwxi6")
+
+[node name="BoxSettings" type="VBoxContainer" parent="HBoxContainer" unique_id=758455222]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="ColorRect" type="Panel" parent="HBoxContainer/BoxSettings" unique_id=6213502]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_ihied")
+
+[node name="Settings" type="Label" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=583378932]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -73.5
+offset_top = 4.0
+offset_right = 74.5
+offset_bottom = 34.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_iaxao")
+text = "Settings"
+
+[node name="Label" type="Label" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=1183002941]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 36.0
+offset_right = 96.0
+offset_bottom = 54.0
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxTexture_6udjo")
+text = "Resolution"
+
+[node name="Resolution" type="OptionButton" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=2098808674]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 54.0
+offset_right = 107.0
+offset_bottom = 81.0
+theme_override_font_sizes/font_size = 14
+selected = 0
+item_count = 5
+popup/item_0/text = "480x270"
+popup/item_0/id = 0
+popup/item_1/text = "640×360"
+popup/item_1/id = 1
+popup/item_2/text = "800×450"
+popup/item_2/id = 2
+popup/item_3/text = "1280×720"
+popup/item_3/id = 3
+popup/item_4/text = "1600×900"
+popup/item_4/id = 4
+
+[node name="Label2" type="Label" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=1831078686]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 81.0
+offset_right = 79.0
+offset_bottom = 101.0
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxTexture_x46cw")
+text = "Window mode"
+
+[node name="Window" type="OptionButton" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=1168747169]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 101.0
+offset_right = 84.0
+offset_bottom = 128.0
+theme_override_font_sizes/font_size = 14
+selected = 0
+item_count = 2
+popup/item_0/text = "Fullscreen"
+popup/item_0/id = 0
+popup/item_1/text = "Windowed"
+popup/item_1/id = 1
+
+[node name="Label3" type="Label" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=944847159]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 128.0
+offset_right = 114.0
+offset_bottom = 148.0
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxTexture_x46cw")
+text = "Sound"
+
+[node name="Close" type="Button" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=883971999]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 235.0
+offset_right = 155.0
+offset_bottom = 266.0
+text = "Close"
+
+[node name="HSlider" type="HSlider" parent="HBoxContainer/BoxSettings/ColorRect" unique_id=1671549727]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 148.0
+offset_right = 112.0
+offset_bottom = 164.0
+theme_override_icons/grabber = ExtResource("5_1wnsb")
+theme_override_icons/grabber_highlight = ExtResource("5_1wnsb")
+theme_override_icons/grabber_disabled = ExtResource("6_oq131")
+value = 70.0
+
+[node name="BoxEmpty" type="VBoxContainer" parent="HBoxContainer" unique_id=2029328637]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SelectLevel" type="Panel" parent="." unique_id=1636545950]
+visible = false
+layout_mode = 0
+offset_left = 163.0
+offset_right = 322.0
+offset_bottom = 270.0
+
+[node name="TextureButton" type="TextureButton" parent="SelectLevel" unique_id=975985305]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("5_ofseh")
+texture_pressed = ExtResource("6_w6voe")
+
+[node name="TextureButton2" type="TextureButton" parent="SelectLevel" unique_id=1355765466]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 45.0
+offset_right = 40.0
+offset_bottom = 77.0
+texture_normal = ExtResource("7_5s5no")
+texture_pressed = ExtResource("8_v3yle")
+
+[node name="TextureButton3" type="TextureButton" parent="SelectLevel" unique_id=1609913188]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 82.0
+offset_right = 40.0
+offset_bottom = 114.0
+texture_normal = ExtResource("9_uu4eq")
+texture_pressed = ExtResource("10_pxa7u")
+
+[node name="TextureButton4" type="TextureButton" parent="SelectLevel" unique_id=1691476184]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 119.0
+offset_right = 40.0
+offset_bottom = 151.0
+texture_normal = ExtResource("11_1wnsb")
+texture_pressed = ExtResource("12_oq131")
+
+[node name="TextureButton5" type="TextureButton" parent="SelectLevel" unique_id=1765405278]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 156.0
+offset_right = 40.0
+offset_bottom = 188.0
+texture_normal = ExtResource("13_2hksm")
+texture_pressed = ExtResource("14_oj2gx")
+
+[node name="BClose" type="Button" parent="SelectLevel" unique_id=783356613]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 235.0
+offset_right = 155.0
+offset_bottom = 266.0
+text = "Close"
+
+[node name="Label" type="Label" parent="SelectLevel" unique_id=904024423]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 8.0
+offset_right = 151.0
+offset_bottom = 40.0
+theme = ExtResource("1_ihied")
+theme_override_font_sizes/font_size = 8
+text = " Level 1 - Easy
+ Score: 2500"
+
+[node name="Label2" type="Label" parent="SelectLevel" unique_id=82279300]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 46.0
+offset_right = 151.0
+offset_bottom = 78.0
+theme = ExtResource("1_ihied")
+theme_override_font_sizes/font_size = 8
+text = " Level 2 - Easy
+ Score: 5000"
+
+[node name="Label3" type="Label" parent="SelectLevel" unique_id=29992400]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 82.0
+offset_right = 151.0
+offset_bottom = 114.0
+theme = ExtResource("1_ihied")
+theme_override_font_sizes/font_size = 8
+text = " Level 3 - Normal
+ Score: 10000"
+
+[node name="Label4" type="Label" parent="SelectLevel" unique_id=1613735269]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 119.0
+offset_right = 151.0
+offset_bottom = 151.0
+theme = ExtResource("1_ihied")
+theme_override_font_sizes/font_size = 8
+text = " Level 4 - Normal
+ Score: 4000"
+
+[node name="Label5" type="Label" parent="SelectLevel" unique_id=1467448593]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 156.0
+offset_right = 151.0
+offset_bottom = 188.0
+theme = ExtResource("1_ihied")
+theme_override_font_sizes/font_size = 8
+text = " Level 5 - Hard
+ Score: 6000"
+
+[node name="SfxClick" type="AudioStreamPlayer2D" parent="." unique_id=847692409]
+stream = ExtResource("15_uu4eq")
+bus = &"SFX"
+
+[node name="SfxClose" type="AudioStreamPlayer2D" parent="." unique_id=959647664]
+stream = ExtResource("16_pxa7u")
+bus = &"SFX"
+
+[connection signal="pressed" from="HBoxContainer/MarginContainer/CenterContainer2/BoxMain/StartB" to="." method="_on_start_b_pressed"]
+[connection signal="pressed" from="HBoxContainer/MarginContainer/CenterContainer2/BoxMain/SettingsB" to="." method="_on_settings_b_pressed"]
+[connection signal="item_selected" from="HBoxContainer/BoxSettings/ColorRect/Resolution" to="." method="_on_option_button_item_selected"]
+[connection signal="item_selected" from="HBoxContainer/BoxSettings/ColorRect/Window" to="." method="_on_window_item_selected"]
+[connection signal="pressed" from="HBoxContainer/BoxSettings/ColorRect/Close" to="." method="_on_close_pressed"]
+[connection signal="value_changed" from="HBoxContainer/BoxSettings/ColorRect/HSlider" to="." method="_on_h_slider_value_changed"]
+[connection signal="pressed" from="SelectLevel/TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="SelectLevel/TextureButton2" to="." method="_on_texture_button_2_pressed"]
+[connection signal="pressed" from="SelectLevel/TextureButton3" to="." method="_on_texture_button_3_pressed"]
+[connection signal="pressed" from="SelectLevel/TextureButton4" to="." method="_on_texture_button_4_pressed"]
+[connection signal="pressed" from="SelectLevel/TextureButton5" to="." method="_on_texture_button_5_pressed"]
+[connection signal="pressed" from="SelectLevel/BClose" to="." method="_on_b_close_pressed"]
